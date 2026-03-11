@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="assets/images/sao-jose-navbar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendário 2026 – São José Peregrinações</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/images/logo.jpg"  alt="São José Peregrinações">
+      <div class="nav-logo-text"><div class="name">São José</div><div class="tagline">Artigos Religiosos e Peregrinações</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li><li><a href="sobre.html">Sobre Nós</a></li>
+      <li><a href="peregrinacoes.html">Peregrinações</a></li><li><a href="calendario.html" class="active">Calendário</a></li>
+      <li><a href="cancao-nova.html">Canção Nova</a></li><li><a href="galeria.html">Galeria</a></li><li><a href="contato.html">Contato</a></li>
+      <li><a href="#" class="btn-nav-whatsapp" data-whatsapp>
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326z"/></svg> WhatsApp
+      </a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile">
+    <a href="index.html">Início</a><a href="sobre.html">Sobre Nós</a><a href="peregrinacoes.html">Peregrinações</a>
+    <a href="calendario.html">Calendário 2026</a><a href="cancao-nova.html">Canção Nova</a>
+    <a href="galeria.html">Galeria</a><a href="contato.html">Contato</a>
+    <a href="#" data-whatsapp style="color:#25d366">WhatsApp</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-content container">
+    <div class="breadcrumb">
+      <a href="index.html">Início</a>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      Calendário 2026
+    </div>
+    <h1>Calendário de Peregrinações 2026</h1>
+    <p>Confira as datas disponíveis e reserve seu lugar com antecedência</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div style="text-align:center;background:var(--off-white);border-radius:var(--radius);padding:20px;margin-bottom:48px;border:1px solid var(--border);" class="fade-up">
+      <p style="color:var(--text-mid);">As datas serão confirmadas em breve. <strong>Entre em contato via WhatsApp</strong> para reservar seu lugar antes da confirmação oficial e garantir condições especiais.</p>
+    </div>
+
+    <!-- Dynamic calendar rendered by JS below -->
+    <div id="cal-current-year"></div>
+    <div id="cal-next-year-wrapper"></div>
+
+    <!-- CTA -->
+    <div style="background:var(--green-dark);border-radius:var(--radius-lg);padding:48px;text-align:center;margin-top:56px;" class="fade-up">
+      <h2 style="color:var(--white);margin-bottom:12px;">Garanta Seu Lugar</h2>
+      <p style="color:rgba(255,255,255,0.8);margin-bottom:32px;">As vagas são limitadas. Entre em contato antes da confirmação oficial das datas para garantir condições especiais.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="#" class="btn btn-whatsapp" data-whatsapp data-whatsapp-msg="Olá! Gostaria de reservar lugar em uma peregrinação de 2026. Poderia me informar sobre as datas disponíveis?">Reservar via WhatsApp</a>
+        <a href="contato.html" class="btn btn-secondary">Enviar Mensagem</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+//  DYNAMIC CALENDAR ENGINE — São José Peregrinações
+//  Add new pilgrimages only to PILGRIMAGES array. No other edits needed.
+// ═══════════════════════════════════════════════════════════════════
+const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MONTH_SHORT_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+const PILGRIMAGES = [
+  { title:"Excursão a Aparecida – Março 2026", desc:"Um fim de semana abençoado em Aparecida do Norte, lar de Nossa Senhora Aparecida, Padroeira do Brasil.", dateStart:new Date(2026,2,27), img:"assets/images/pilgrimages/aparecida-marco-2026.jpg", href:"aparecida-marco-2026.html", partner:null, confirmed:true, duration:"4 dias", priceLabel:"R$ 2.290,00" },
+  { title:"Itália – Abril 2026", desc:"Veneza, Pádua, Florença, Assis, Loreto, Lanciano, Monte Gargano, San Giovanni Rotondo e Roma.", dateStart:new Date(2026,3,7), img:"assets/images/pilgrimages/italia-abril-2026.jpg", href:"italia-abril-2026.html", partner:"Canção Nova", confirmed:true, duration:"12 dias", priceLabel:null },
+  { title:"Bélgica, Holanda e Alemanha – Maio 2026", desc:"Bruxelas, Bruges, Amsterdam, Keukenhof, Colônia, Schoenstatt e Frankfurt.", dateStart:new Date(2026,4,4), img:"assets/images/pilgrimages/belgica-maio-2026.jpg", href:"belgica-maio-2026.html", partner:null, confirmed:true, duration:"13 dias", priceLabel:"R$ 28.980,00" },
+  { title:"Portugal, Espanha e França – Maio 2026", desc:"Lisboa, Óbidos, Nazaré, Fátima, Madrid, Lourdes, Ars, Paray-le-Monial, Nevers, Paris e Lisieux. 13 de Maio em Fátima.", dateStart:new Date(2026,4,10), img:"assets/images/pilgrimages/portugal-espanha-franca-maio-2026.jpg", href:"portugal-espanha-franca-maio-2026.html", partner:null, confirmed:true, duration:"16 dias", priceLabel:"R$ 28.980,00" },
+  { title:"México – Maio 2026", desc:"Basílica de Nossa Senhora de Guadalupe, Tulpetlac, Cuautitlán, Teotihuacán, Puebla e Cholula.", dateStart:new Date(2026,4,12), img:"assets/images/pilgrimages/mexico-maio-2026.jpg", href:"mexico-maio-2026.html", partner:"Canção Nova", confirmed:true, duration:"9 dias", priceLabel:"R$ 18.980,00" },
+  { title:"Fátima – 13 de Maio (Centenário das Aparições)", desc:"Peregrinação especial ao Santuário de Fátima para as comemorações do 13 de Maio.", dateStart:new Date(2026,4,13), img:null, href:"peregrinacao-detalhe.html", partner:null, confirmed:true, duration:"10 dias", priceLabel:null },
+  { title:"Santuários Franceses – França, Junho 2026", desc:"Paris, Lisieux, Monte São Michel, Lourdes, La Salette, Paray-le-Monial e Nevers. Parceria Canção Nova.", dateStart:new Date(2026,5,1), img:"assets/images/pilgrimages/franca-junho-2026.jpg", href:"franca-junho-2026.html", partner:"Canção Nova", confirmed:true, duration:"16 dias", priceLabel:"R$ 26.980,00" },
+  { title:"Itália – Junho 2026", desc:"Milão, Turim, Bolonha, Veneza, Pádua, Florença, Siena, Assis, Cássia, Lanciano, San Giovanni Rotondo, Monte Sant'Angelo e Roma. Com Padre Márcio Reis.", dateStart:new Date(2026,5,15), img:"assets/images/pilgrimages/italia-junho-2026.jpg", href:"italia-junho-2026.html", partner:null, confirmed:true, duration:"16 dias", priceLabel:"R$ 27.980,00" },
+  { title:"Grécia e Turquia com Capadócia e Ilhas Gregas – Julho 2026", desc:"Capadócia, Éfeso, Patmos, Santorini, Rodes, Creta, Atenas, Meteora e Tessalônica. Parceria Canção Nova.", dateStart:new Date(2026,6,5), img:"assets/images/pilgrimages/grecia-turquia-julho-2026.jpg", href:"grecia-turquia-julho-2026.html", partner:"Canção Nova", confirmed:true, duration:"16 dias", priceLabel:"R$ 29.980,00" },
+  { title:"Terra Santa – Julho 2026", desc:"Jerusalém, Belém, Nazaré, Mar da Galileia, Rio Jordão, Monte Tabor, Cafarnaum e Ain Karem. Com Padre Altair.", dateStart:new Date(2026,6,7), img:null, href:"terra-santa-julho-2026.html", partner:null, confirmed:true, duration:"10 dias", priceLabel:"R$ 23.980,00" },
+  { title:"Itália e França – Julho 2026", desc:"Lourdes, Paris, Lisieux, Nevers, Roma, Assis, Loreto e Pádua. Grandes santuários da Europa em uma única peregrinação.", dateStart:new Date(2026,6,18), img:null, href:"italia-franca-julho-2026.html", partner:null, confirmed:true, duration:"14 dias", priceLabel:"R$ 27.980,00" },
+  { title:"Portugal e Itália – Agosto 2026", desc:"Fátima, Lisboa, Roma, Assis, Loreto, San Giovanni Rotondo e Veneza. Com Padre Fábio Galdino, Padre Duarte Lara e Danilo Gesualdo.", dateStart:new Date(2026,7,3), img:null, href:"portugal-italia-agosto-2026.html", partner:null, confirmed:true, duration:"15 dias", priceLabel:"R$ 26.980,00" },
+  { title:"Fátima – 13 de Outubro (Milagre do Sol)", desc:"Peregrinação especial ao Santuário de Fátima para as comemorações do 13 de Outubro.", dateStart:new Date(2026,9,13), img:null, href:"peregrinacao-detalhe.html", partner:null, confirmed:true, duration:"10 dias", priceLabel:null }
+
+  // ── Add future pilgrimages here ──
+];
+
+function buildCalEntry(p) {
+  const statusHtml = p.confirmed
+    ? `<span class="status-confirmed">&#10004; Confirmada</span>`
+    : `<span class="status-awaiting">&#9679; Aguardando grupo</span>`;
+  const partnerBadge = p.partner
+    ? `<span style="background:#1a3a6b;color:#e2c06a;font-size:0.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:50px;margin-left:8px;">${p.partner}</span>`
+    : '';
+  const dayStr = p.dateStart ? `${MONTH_SHORT_PT[p.dateStart.getMonth()]} ${String(p.dateStart.getDate()).padStart(2,'0')} · ` : '';
+  const durationStr = p.priceLabel ? `${dayStr}${p.duration} · ${p.priceLabel}` : `${dayStr}${p.duration}`;
+  const borderStyle = p.partner ? 'border-left:4px solid #1a3a6b;' : (p.confirmed ? 'border-left:4px solid var(--gold-dark);' : '');
+  const mediaHtml = p.img
+    ? `<div style="flex-shrink:0;width:90px;"><img src="${p.img}" alt="${p.title}" style="width:90px;height:90px;object-fit:cover;object-position:top;border-radius:var(--radius);"></div>`
+    : `<div class="calendar-date"><div class="month">${p.dateStart ? MONTH_SHORT_PT[p.dateStart.getMonth()] : '—'}</div><div class="day">${p.dateStart ? p.dateStart.getDate() : '—'}</div></div>`;
+  return `<div class="calendar-entry fade-up" style="${borderStyle}">${mediaHtml}<div class="calendar-info"><h4 style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">${p.title}${partnerBadge}</h4><div style="margin-bottom:6px;">${statusHtml}</div><p>${p.desc}</p><span class="duration">${durationStr}</span></div><a href="${p.href}" class="btn btn-green">Ver Detalhes</a></div>`;
+}
+function buildPlaceholder(m) {
+  return `<div class="calendar-entry fade-up" style="opacity:0.55;"><div class="calendar-date"><div class="month">${MONTH_SHORT_PT[m]}</div><div class="day">--</div></div><div class="calendar-info"><h4>Aguardando confirmação de peregrinação</h4><span class="status-awaiting">&#9679; Aguardando grupo</span><p>Entre em contato para verificar disponibilidade neste mês.</p><span class="duration">—</span></div><a href="contato.html" class="btn btn-secondary">Consultar</a></div>`;
+}
+function buildMonthSection(year, m, entries) {
+  const rows = entries.length ? entries.map(buildCalEntry).join('') : buildPlaceholder(m);
+  return `<div class="cal-month-section" data-year="${year}" data-month="${m}"><h3 style="color:var(--text-mid);font-size:1rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;margin-top:32px;font-family:'Lato',sans-serif;font-weight:700;">${MONTH_NAMES_PT[m]}</h3>${rows}</div>`;
+}
+
+(function renderCalendar() {
+  const now       = new Date();
+  const todayYear = now.getFullYear();
+  const todayMon  = now.getMonth();
+  const todayMidnight = new Date(todayYear, todayMon, now.getDate());
+
+  // Index pilgrimages by year-month key, only future ones
+  const byYM = {};
+  PILGRIMAGES.forEach(p => {
+    if (!p.dateStart) return;
+    if (new Date(p.dateStart.getFullYear(), p.dateStart.getMonth(), p.dateStart.getDate()) < todayMidnight) return;
+    const k = `${p.dateStart.getFullYear()}-${p.dateStart.getMonth()}`;
+    (byYM[k] = byYM[k] || []).push(p);
+  });
+
+  // ── Current year: months from today onward ──
+  let cyHtml = `<div class="fade-up" style="margin-bottom:48px;"><h2 style="margin-bottom:24px;">${todayYear}</h2><div class="gold-bar" style="margin:0 0 32px;"></div>`;
+  for (let m = todayMon; m < 12; m++) {
+    cyHtml += buildMonthSection(todayYear, m, byYM[`${todayYear}-${m}`] || []);
+  }
+  cyHtml += '</div>';
+  document.getElementById('cal-current-year').innerHTML = cyHtml;
+
+  // ── Next year: fill as many months as were dropped from current year ──
+  const nextYear = todayYear + 1;
+  const fillCount = Math.max(todayMon, 1);
+  let nyHtml = '';
+  for (let m = 0; m < fillCount; m++) {
+    nyHtml += buildMonthSection(nextYear, m, byYM[`${nextYear}-${m}`] || []);
+  }
+
+  const chevron = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
+  document.getElementById('cal-next-year-wrapper').innerHTML =
+    `<div class="cal-year-toggle fade-up" id="cal-next-toggle" role="button" tabindex="0" aria-expanded="false">
+      <h2 style="color:var(--green-dark);">${nextYear}</h2>${chevron}
+    </div>
+    <div class="cal-next-year" id="cal-next-body" style="padding:0 4px;">
+      <div style="padding-top:32px;">${nyHtml}</div>
+    </div>`;
+
+  const toggle = document.getElementById('cal-next-toggle');
+  const body   = document.getElementById('cal-next-body');
+  toggle.addEventListener('click', () => {
+    const open = body.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+  });
+  toggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle.click();} });
+})();
+</script>
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/images/logo.jpg" alt="São José Peregrinações">
+        <p>Há mais de 20 anos organizando peregrinações católicas com fé, cuidado e profissionalismo.</p>
+      </div>
+      <div class="footer-col"><h5>Navegação</h5><ul>
+        <li><a href="index.html">Início</a></li><li><a href="sobre.html">Sobre Nós</a></li>
+        <li><a href="peregrinacoes.html">Peregrinações</a></li><li><a href="calendario.html">Calendário 2026</a></li>
+        <li><a href="cancao-nova.html">Canção Nova</a></li><li><a href="galeria.html">Galeria</a></li><li><a href="contato.html">Contato</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Destinos</h5><ul>
+        <li><a href="peregrinacoes.html">Caminho de Santiago</a></li><li><a href="peregrinacoes.html">Terra Santa</a></li>
+        <li><a href="peregrinacoes.html">Roma e Vaticano</a></li><li><a href="peregrinacoes.html">Fátima</a></li>
+        <li><a href="peregrinacoes.html">Lourdes</a></li><li><a href="peregrinacoes.html">Medjugorje</a></li>
+      </ul></div>
+      <div class="footer-col"><h5>Contato</h5>
+        <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Campo Grande, MS, Brasil</span></div>
+        <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326z"/></svg>
+          <a href="#" data-whatsapp style="color:rgba(255,255,255,0.7)">Falar pelo WhatsApp</a></div>
+      </div>
+    </div>
+    
+    <div class="footer-dev">
+      <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" aria-label="Desenvolvido por Lucas – Falar no WhatsApp">
+        <img src="assets/images/dev-lucas-logo.png" alt="Lucas – Desenvolvedor Web">
+        <span>Desenvolvido por Lucas</span>
+      </a>
+    </div>
+    <div class="footer-bottom"><p>© 2026 São José Artigos Religiosos e Peregrinações. Todos os direitos reservados.</p></div>
+  </div>
+</footer>
+
+<a href="#" class="whatsapp-float" data-whatsapp aria-label="Falar no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+</a>
+<script src="js/main.js"></script>
+</body>
+</html>
