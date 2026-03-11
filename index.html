@@ -195,259 +195,25 @@
   </div>
 </section>
 
+<script src="js/data.js"></script>
 <script>
-// ─── PILGRIMAGE MASTER LIST ────────────────────────────────────────────────
-// Add new pilgrimages here. "date" drives the sort order.
-// Set confirmed:true only when dates are locked.
-const PILGRIMAGES = [
-  {
-    title:     "Excursão a Aparecida – Março 2026",
-    badge:     "Brasil – Aparecida",
-    date:      new Date(2026, 2, 27),  // 27 March 2026
-    duration:  "4 dias",
-    dateLabel: "27 a 30 de Março de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Um fim de semana abençoado em Aparecida do Norte, lar de Nossa Senhora Aparecida, Padroeira do Brasil.",
-    href:      "aparecida-marco-2026.html",
-    img:       "assets/images/pilgrimages/aparecida-marco-2026.jpg",
-  },
-  {
-    title:     "Itália – Abril 2026",
-    badge:     "Itália",
-    date:      new Date(2026, 3, 7),   // 07 April 2026 (month is 0-indexed)
-    duration:  "12 dias",
-    dateLabel: "07 a 18 de Abril de 2026",
-    confirmed: true,
-    partner:   "Canção Nova",
-    desc:      "Veneza, Pádua, Florença, Assis, Loreto, Lanciano, Monte Gargano e Roma. Parceria especial com a Canção Nova.",
-    href:      "italia-abril-2026.html",
-    img:       "assets/images/pilgrimages/italia-abril-2026.jpg",
-  },
-  {
-    title:     "Bélgica, Holanda e Alemanha – Maio 2026",
-    badge:     "Bélgica · Holanda · Alemanha",
-    date:      new Date(2026, 4, 4),   // 04 May 2026
-    duration:  "13 dias",
-    dateLabel: "04 a 16 de Maio de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Bruxelas, Bruges, Amsterdam, Keukenhof, Colônia, Santuário de Schoenstatt e Frankfurt. Embarque em qualquer capital do Brasil.",
-    href:      "belgica-maio-2026.html",
-    img:       "assets/images/pilgrimages/belgica-maio-2026.jpg",
-  },
-  {
-    title:     "Portugal, Espanha e França – Maio 2026",
-    badge:     "Portugal · Espanha · França",
-    date:      new Date(2026, 4, 10),  // 10 May 2026
-    duration:  "16 dias",
-    dateLabel: "10 a 25 de Maio de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Lisboa, Fátima, Madrid, Lourdes, Ars, Paray-le-Monial, Nevers, Paris e Lisieux. 13 de Maio em Fátima com Padre Linniker.",
-    href:      "portugal-espanha-franca-maio-2026.html",
-    img:       "assets/images/pilgrimages/portugal-espanha-franca-maio-2026.jpg",
-  },
-  {
-    title:     "México – Maio 2026",
-    badge:     "México · Canção Nova",
-    date:      new Date(2026, 4, 12),  // 12 May 2026
-    duration:  "9 dias",
-    dateLabel: "12 a 20 de Maio de 2026",
-    confirmed: true,
-    partner:   "Canção Nova",
-    desc:      "Basílica de Nossa Senhora de Guadalupe, Tulpetlac, Cuautitlán, Pirâmides de Teotihuacán, Puebla e Cholula.",
-    href:      "mexico-maio-2026.html",
-    img:       "assets/images/pilgrimages/mexico-maio-2026.jpg",
-  },
-  {
-    title:     "Santuários Franceses – França, Junho 2026",
-    badge:     "França · Canção Nova",
-    date:      new Date(2026, 5, 1),   // 01 June 2026
-    duration:  "16 dias",
-    dateLabel: "01 a 16 de Junho de 2026",
-    confirmed: true,
-    partner:   "Canção Nova",
-    desc:      "Paris, Lisieux, Monte São Michel, Lourdes, La Salette, Paray-le-Monial e Nevers. Com Padre Alessandro e Salette Ferreira.",
-    href:      "franca-junho-2026.html",
-    img:       "assets/images/pilgrimages/franca-junho-2026.jpg",
-  },
-  {
-    title:     "Itália – Junho 2026",
-    badge:     "Itália",
-    date:      new Date(2026, 5, 15),  // 15 June 2026
-    duration:  "16 dias",
-    dateLabel: "15 a 30 de Junho de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Milão, Turim, Veneza, Pádua, Florença, Siena, Assis, Cássia, Lanciano, San Giovanni Rotondo e Roma. Com Padre Márcio Reis.",
-    href:      "italia-junho-2026.html",
-    img:       "assets/images/pilgrimages/italia-junho-2026.jpg",
-  },
-  {
-    title:     "Grécia e Turquia – Julho 2026",
-    badge:     "Grécia · Turquia · Canção Nova",
-    date:      new Date(2026, 6, 5),   // 05 July 2026
-    duration:  "16 dias",
-    dateLabel: "05 a 20 de Julho de 2026",
-    confirmed: true,
-    partner:   "Canção Nova",
-    desc:      "Capadócia, Éfeso, Patmos, Santorini, Rodes, Creta, Atenas e Meteora. Com Pe. Edilberto e Emanuel Stênio.",
-    href:      "grecia-turquia-julho-2026.html",
-    img:       "assets/images/pilgrimages/grecia-turquia-julho-2026.jpg",
-  },
-  {
-    title:     "Terra Santa – Julho 2026",
-    badge:     "Israel · Palestina",
-    date:      new Date(2026, 6, 7),   // 07 July 2026
-    duration:  "10 dias",
-    dateLabel: "07 a 16 de Julho de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Jerusalém, Belém, Nazaré, Mar da Galileia, Rio Jordão, Monte Tabor, Cafarnaum e Ain Karem. Com Padre Altair.",
-    href:      "terra-santa-julho-2026.html",
-    img:       null,
-    icon:      "cross",
-  },
-  {
-    title:     "Itália e França – Julho 2026",
-    badge:     "Itália · França",
-    date:      new Date(2026, 6, 18),  // 18 July 2026
-    duration:  "14 dias",
-    dateLabel: "18 a 31 de Julho de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Lourdes, Paris, Lisieux, Nevers, Roma, Assis, Loreto e Pádua. Grandes santuários da Europa em uma única peregrinação.",
-    href:      "italia-franca-julho-2026.html",
-    img:       null,
-    icon:      "cross",
-  },
-  {
-    title:     "Portugal e Itália – Agosto 2026",
-    badge:     "Portugal · Itália",
-    date:      new Date(2026, 7, 3),   // 03 August 2026
-    duration:  "15 dias",
-    dateLabel: "03 a 17 de Agosto de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Fátima, Lisboa, Roma, Assis, Loreto, San Giovanni Rotondo e Veneza. Com Padre Fábio Galdino, Padre Duarte Lara e Danilo Gesualdo.",
-    href:      "portugal-italia-agosto-2026.html",
-    img:       null,
-    icon:      "cross",
-  },
-  {
-    title:     "Fátima – 13 de Maio",
-    badge:     "Portugal",
-    date:      new Date(2026, 4, 13),  // 13 May 2026
-    duration:  "10 dias",
-    dateLabel: "13 de Maio de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Peregrinação especial às comemorações do 13 de Maio em Fátima, data das aparições de Nossa Senhora.",
-    href:      "peregrinacao-detalhe.html",
-    img:       null,
-    icon:      "cross",
-  },
-  {
-    title:     "Fátima – 13 de Outubro",
-    badge:     "Portugal",
-    date:      new Date(2026, 9, 13),  // 13 Oct 2026
-    duration:  "10 dias",
-    dateLabel: "13 de Outubro de 2026",
-    confirmed: true,
-    partner:   null,
-    desc:      "Peregrinação especial ao Santuário de Fátima para as comemorações do 13 de Outubro – Milagre do Sol.",
-    href:      "peregrinacao-detalhe.html",
-    img:       null,
-    icon:      "cross",
-  },
-  {
-    title:     "Caminho de Santiago",
-    badge:     "Espanha / Portugal",
-    date:      null,   // no date yet — won't show in upcoming until date is set
-    duration:  "14 dias",
-    dateLabel: "Data a confirmar",
-    confirmed: false,
-    partner:   null,
-    desc:      "Percorra o histórico Caminho de Santiago, seguindo os passos de milhões de peregrinos ao longo dos séculos.",
-    href:      "peregrinacoes.html",
-    img:       null,
-    icon:      "cross",
-  },
-  {
-    title:     "Terra Santa – Jerusalém e Belém",
-    badge:     "Israel / Palestina",
-    date:      null,
-    duration:  "12 dias",
-    dateLabel: "Data a confirmar",
-    confirmed: false,
-    partner:   null,
-    desc:      "Caminhe pelas ruas onde Jesus viveu, pregou e ressuscitou. Uma peregrinação que transforma a fé.",
-    href:      "peregrinacoes.html",
-    img:       null,
-    icon:      "cross",
-  },
-];
-
-// ─── CALENDAR SVG (reused in cards) ───────────────────────────────────────
-const calSVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
-const clkSVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
-
-// ─── BUILD CARD HTML ───────────────────────────────────────────────────────
-function buildCard(p) {
-  const statusLabel = (p.confirmed && p.date)
-    ? `<span class="status-confirmed">&#10004; Confirmada</span>`
-    : `<span class="status-awaiting">&#9679; Aguardando grupo</span>`;
-
-  const badgeText = p.partner ? `${p.badge} · ${p.partner}` : p.badge;
-  const borderStyle = p.partner ? 'border:2px solid #1a3a6b;' : '';
-
-  const media = p.img
-    ? `<img src="${p.img}" alt="${p.title}" style="width:100%;height:auto;display:block;">`
-    : `<div class="card-img-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div>`;
-
-  return `
-    <div class="card fade-up" style="${borderStyle}overflow:hidden;">
-      ${media}
-      <div class="card-body">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
-          <span class="card-badge" style="margin-bottom:0;">${badgeText}</span>
-          ${statusLabel}
-        </div>
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-        <div class="card-meta">
-          <span>${calSVG} ${p.dateLabel}</span>
-          <span>${clkSVG} ${p.duration}</span>
-        </div>
-        <a href="${p.href}" class="btn btn-green" style="width:100%;justify-content:center;">Ver Detalhes</a>
-      </div>
-    </div>`;
-}
-
-// ─── SORT & PICK CLOSEST 3 ─────────────────────────────────────────────────
+// ─── INDEX: Próximas Peregrinações — driven by js/data.js ─────────────────
 (function renderUpcoming() {
-  const now   = new Date();
-  const grid  = document.getElementById("upcoming-pilgrimages-grid");
+  var now  = new Date();
+  var grid = document.getElementById("upcoming-pilgrimages-grid");
   if (!grid) return;
-
-  // 1. Pilgrimages with confirmed future dates first, sorted ascending
-  const dated = PILGRIMAGES
-    .filter(p => p.date && p.date >= now)
-    .sort((a, b) => a.date - b.date);
-
-  // 2. Undated pilgrimages as fallback (in original order)
-  const undated = PILGRIMAGES.filter(p => !p.date);
-
-  // 3. Take 3 closest: dated first, fill remainder with undated
-  const show = [...dated, ...undated].slice(0, 3);
-
-  grid.innerHTML = show.map(buildCard).join("");
-
-  // Re-trigger fade-up observer if main.js uses IntersectionObserver
+  // Homepage: exclude cancelado and esgotada (isVisible), show only future dated first
+  var visible = SJ_DATA.pilgrimages.filter(function(p){ return SJ_DATA.isVisible(p); });
+  var dated   = visible.filter(function(p){ var d=SJ_DATA.getDate(p); return d && d >= now; })
+                       .sort(function(a,b){ return SJ_DATA.getDate(a)-SJ_DATA.getDate(b); });
+  var undated = visible.filter(function(p){ return !SJ_DATA.getDate(p); });
+  var show = dated.concat(undated).slice(0, 3);
+  grid.innerHTML = show.map(function(p){ return SJ_DATA.buildCard(p); }).join("");
+  eval(SJ_DATA.waitlistJS);
   if (typeof window.initFadeUp === "function") window.initFadeUp();
 })();
 </script>
+
 
 <!-- ══════ DESTINATIONS ══════ -->
 <section class="section bg-green">
@@ -533,14 +299,30 @@ function buildCard(p) {
       <div class="gold-bar"></div>
       <p>Registros das nossas peregrinações ao redor do mundo</p>
     </div>
-    <div class="gallery-grid fade-up">
-      <div class="gallery-item"><div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
-      <div class="gallery-item"><div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
-      <div class="gallery-item"><div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
-      <div class="gallery-item"><div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
-      <div class="gallery-item"><div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
-      <div class="gallery-item"><div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></div>
+    <div class="gallery-grid fade-up" id="home-gallery-grid">
+      <!-- Filled dynamically by data.js -->
     </div>
+    <script>
+    (function renderGallery() {
+      const grid = document.getElementById('home-gallery-grid');
+      const overlayIcon = `<div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>`;
+      const placeholder = `<div class="gallery-item-placeholder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" style="width:48px;height:48px;opacity:0.4;"><line x1="20" y1="4" x2="20" y2="36"/><line x1="8" y1="14" x2="32" y2="14"/></svg></div>`;
+      const gallery = SJ_DATA.gallery || [];
+      const show = gallery.slice(0, 6);
+      if (show.length === 0) {
+        // Show 6 placeholders when no gallery images added yet
+        grid.innerHTML = Array(6).fill(`<div class="gallery-item">${placeholder}${overlayIcon}</div>`).join('');
+      } else {
+        // Fill with real images, pad with placeholders if fewer than 6
+        const items = [...show];
+        while (items.length < 6) items.push(null);
+        grid.innerHTML = items.map(g => g
+          ? `<div class="gallery-item"><img src="${g.src}" alt="${g.alt || ''}" style="width:100%;height:100%;object-fit:cover;">${overlayIcon}</div>`
+          : `<div class="gallery-item">${placeholder}${overlayIcon}</div>`
+        ).join('');
+      }
+    })();
+    </script>
     <div style="text-align:center;margin-top:40px;" class="fade-up">
       <a href="galeria.html" class="btn btn-primary">Ver Galeria Completa</a>
     </div>

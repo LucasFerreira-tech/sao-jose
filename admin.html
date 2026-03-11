@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – São José Peregrinações</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --green:#1a4a2e;--green2:#245e38;--gold:#c9a84c;--blue:#1a3a6b;
+      --bg:#f0f2f5;--white:#fff;--border:#e5e7eb;
+      --text:#1a1a2e;--mid:#555;--light:#999;--red:#e53e3e;
+    }
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+
+    /* LOGIN */
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--green),#2d8a4e)}
+    .login-box{background:var(--white);border-radius:16px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}
+    .login-box img{width:72px;height:72px;object-fit:contain;border-radius:12px;margin-bottom:16px}
+    .login-box h1{font-size:1.35rem;color:var(--green);margin-bottom:4px}
+    .login-box p{color:var(--light);font-size:.9rem;margin-bottom:32px}
+    .lf{margin-bottom:14px;text-align:left}
+    .lf label{display:block;font-size:.82rem;font-weight:600;color:#444;margin-bottom:5px}
+    .lf input{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:8px;font-size:1rem;outline:none;transition:border .2s}
+    .lf input:focus{border-color:var(--green)}
+    .btn-login{width:100%;padding:13px;background:var(--green);color:var(--white);border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s}
+    .btn-login:hover{background:var(--green2)}
+    .login-err{color:var(--red);font-size:.83rem;margin-top:10px;display:none}
+
+    /* LAYOUT */
+    #admin-app{display:none;min-height:100vh}
+    .topbar{background:var(--green);color:var(--white);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:58px;position:sticky;top:0;z-index:200}
+    .topbar-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.95rem}
+    .topbar-brand img{width:34px;height:34px;object-fit:contain;border-radius:6px}
+    .topbar-right{display:flex;align-items:center;gap:8px}
+    .tb-btn{padding:7px 14px;background:rgba(255,255,255,.15);border:none;color:var(--white);border-radius:6px;cursor:pointer;font-size:.83rem;transition:background .2s;text-decoration:none;display:inline-block}
+    .tb-btn:hover{background:rgba(255,255,255,.25)}
+    .tb-btn.gold{background:var(--gold);color:var(--green);font-weight:700}
+    .tb-btn.gold:hover{background:#e0bb60}
+
+    .sidebar{width:220px;background:var(--white);border-right:1px solid var(--border);height:calc(100vh - 58px);position:fixed;top:58px;left:0;overflow-y:auto;padding:16px 0}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;font-size:.9rem;color:var(--mid);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
+    .nav-item:hover,.nav-item.active{color:var(--green);background:#f0faf4;border-left-color:var(--green)}
+    .nav-item svg{width:18px;height:18px;flex-shrink:0}
+    .nav-section{font-size:.72rem;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:1px;padding:16px 20px 6px}
+
+    .main{margin-left:220px;padding:28px}
+    .page{display:none}
+    .page.active{display:block}
+    .page-title{font-size:1.4rem;font-weight:700;color:var(--green);margin-bottom:6px}
+    .page-sub{color:var(--mid);font-size:.9rem;margin-bottom:28px}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:28px}
+    .stat{background:var(--white);border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+    .stat-val{font-size:1.8rem;font-weight:700;color:var(--green)}
+    .stat-lbl{font-size:.8rem;color:var(--mid);margin-top:2px}
+
+    /* CARD BOX */
+    .card-box{background:var(--white);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden;margin-bottom:24px}
+    .card-box-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+    .card-box-header h2{font-size:1rem;font-weight:700;color:var(--text)}
+    table{width:100%;border-collapse:collapse}
+    th{background:#f8f9fa;padding:10px 14px;text-align:left;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--border)}
+    td{padding:12px 14px;border-bottom:1px solid #f5f5f5;font-size:.88rem;color:var(--text);vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#fafbfc}
+    .thumb{width:52px;height:38px;object-fit:cover;border-radius:6px;background:#eee;display:block}
+    .no-img{width:52px;height:38px;border-radius:6px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#aaa;text-align:center;line-height:1.2}
+
+    /* BADGES */
+    .badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:.72rem;font-weight:700}
+    .badge-green{background:#d1fae5;color:#065f46}
+    .badge-yellow{background:#fef9c3;color:#854d0e}
+    .badge-red{background:#fee2e2;color:#991b1b}
+    .badge-blue{background:#dbeafe;color:#1e40af}
+    .badge-gray{background:#f3f4f6;color:#6b7280}
+    .badge-orange{background:#ffedd5;color:#9a3412}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;transition:all .15s;text-decoration:none}
+    .btn-primary{background:var(--green);color:var(--white)}
+    .btn-primary:hover{background:var(--green2)}
+    .btn-secondary{background:#f3f4f6;color:#444}
+    .btn-secondary:hover{background:#e5e7eb}
+    .btn-danger{background:#fee2e2;color:#991b1b}
+    .btn-danger:hover{background:#fecaca}
+    .btn-gold{background:var(--gold);color:var(--green);font-weight:700}
+    .btn-gold:hover{background:#e0bb60}
+
+    /* MODAL */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px}
+    .modal-backdrop.open{display:flex}
+    .modal{background:var(--white);border-radius:14px;width:100%;max-width:660px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border)}
+    .modal-header h3{font-size:1.05rem;font-weight:700;color:var(--text)}
+    .modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--light);line-height:1;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:4px}
+    .modal-close:hover{background:#f3f4f6}
+    .modal-body{padding:24px;max-height:70vh;overflow-y:auto}
+    .modal-footer{display:flex;gap:10px;justify-content:flex-end;padding:16px 24px;border-top:1px solid var(--border)}
+
+    /* FORM */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .fg{display:flex;flex-direction:column;gap:5px}
+    .fg.span2{grid-column:span 2}
+    .fg label{font-size:.8rem;font-weight:600;color:#444}
+    .fg input,.fg select,.fg textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:.9rem;outline:none;transition:border .2s;width:100%;font-family:inherit}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green)}
+    .fg textarea{resize:vertical;min-height:75px}
+    .img-preview-placeholder{width:100%;height:150px;background:#f3f4f6;border-radius:8px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--light);margin-top:6px;cursor:pointer;transition:border .2s,background .2s}
+    .img-preview-placeholder:hover{border-color:var(--green);background:#f0faf4}
+    .img-preview-placeholder img{width:100%;height:100%;object-fit:cover;border-radius:6px}
+    .img-preview-shown{width:100%;height:150px;object-fit:cover;border-radius:8px;margin-top:6px;cursor:pointer;display:block;border:2px solid var(--border)}
+
+    /* DIRECTORS */
+    .director-row{display:flex;align-items:center;gap:10px;background:#f8f9fa;border-radius:8px;padding:10px 12px;margin-bottom:8px}
+    .director-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:#ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#aaa}
+    .director-avatar img{width:42px;height:42px;border-radius:50%;object-fit:cover}
+    .director-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+    .director-info input{border:1px solid var(--border);border-radius:5px;padding:4px 8px;font-size:.83rem;width:100%;outline:none;font-family:inherit}
+    .director-info input:focus{border-color:var(--green)}
+
+    /* GALLERY */
+    .gallery-grid-admin{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:16px}
+    .gallery-item-admin{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#e5e7eb}
+    .gallery-item-admin img{width:100%;height:100%;object-fit:cover}
+    .gallery-item-admin .rm-btn{position:absolute;top:5px;right:5px;background:rgba(220,38,38,.9);color:white;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700}
+    .gallery-upload-box{border:2px dashed var(--border);border-radius:8px;padding:28px;text-align:center;cursor:pointer;transition:all .2s}
+    .gallery-upload-box:hover{border-color:var(--green);background:#f0faf4}
+
+    /* EXPORT */
+    .export-box{background:linear-gradient(135deg,var(--green),#2d8a4e);border-radius:14px;padding:32px;color:var(--white);text-align:center}
+    .export-box h2{font-size:1.3rem;margin-bottom:10px}
+    .export-box p{opacity:.85;font-size:.9rem;margin-bottom:24px}
+    .export-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:28px;text-align:left}
+    .export-step{background:rgba(255,255,255,.12);border-radius:10px;padding:14px}
+    .export-step-num{font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:6px}
+    .export-step p{font-size:.82rem;opacity:.9;margin-bottom:0}
+    .alert-success{background:#d1fae5;border-radius:8px;padding:14px 18px;color:#065f46;font-weight:600;margin-top:16px}
+    .alert-error{background:#fee2e2;border-radius:8px;padding:14px 18px;color:#991b1b;margin-top:16px}
+
+    /* SECTION HEADER */
+    .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .section-hdr h3{font-size:.95rem;font-weight:700;color:#333}
+
+    @media(max-width:900px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      .form-grid{grid-template-columns:1fr}
+      .fg.span2{grid-column:span 1}
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <img src="assets/images/logo.jpg" alt="Logo São José">
+    <h1>Área Administrativa</h1>
+    <p>São José Peregrinações</p>
+    <div class="lf"><label>Usuário</label><input type="text" id="l-user" placeholder="admin" autocomplete="username"></div>
+    <div class="lf"><label>Senha</label><input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="btn-login" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="l-err">Usuário ou senha incorretos.</div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <img src="assets/images/logo.jpg" alt="">
+      <span>São José – Admin</span>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn gold" onclick="showPage('export')">⬇ Exportar ZIP</button>
+      <a href="index.html" target="_blank" class="tb-btn">Ver Site ↗</a>
+      <button class="tb-btn" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" id="nav-dashboard" onclick="showPage('dashboard')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-section">Conteúdo</div>
+    <div class="nav-item" id="nav-pilgrimages" onclick="showPage('pilgrimages')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+      Peregrinações
+    </div>
+    <div class="nav-item" id="nav-gallery" onclick="showPage('gallery')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      Galeria "Momentos de Fé"
+    </div>
+    <div class="nav-section">Exportar</div>
+    <div class="nav-item" id="nav-export" onclick="showPage('export')">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      Exportar ZIP
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-title">Dashboard</div>
+      <div class="page-sub">Resumo geral do conteúdo do site</div>
+      <div class="stats-row" id="dash-stats"></div>
+      <div class="card-box">
+        <div class="card-box-header">
+          <h2>Peregrinações (ordenadas por data)</h2>
+          <button class="btn btn-primary" onclick="showPage('pilgrimages')">Gerenciar Todas</button>
+        </div>
+        <div style="overflow-x:auto">
+        <table><thead><tr><th>Capa</th><th>Título</th><th>Data</th><th>Status</th><th>Categoria</th></tr></thead>
+        <tbody id="dash-table"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILGRIMAGES -->
+    <div class="page" id="page-pilgrimages">
+      <div class="page-title">Peregrinações</div>
+      <div class="page-sub">Adicione, edite ou remova peregrinações. As alterações refletem automaticamente em todas as páginas do site.</div>
+      <div class="card-box">
+        <div class="card-box-header">
+          <h2>Todas as Peregrinações (<span id="pil-count">0</span>)</h2>
+          <button class="btn btn-primary" onclick="openAddModal()">+ Nova Peregrinação</button>
+        </div>
+        <div style="overflow-x:auto">
+        <table><thead><tr><th>Capa</th><th>Título</th><th>Mês/Ano</th><th>Status</th><th>Categoria</th><th style="min-width:130px">Ações</th></tr></thead>
+        <tbody id="pil-table"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="page" id="page-gallery">
+      <div class="page-title">Galeria – Momentos de Fé</div>
+      <div class="page-sub">Fotos exibidas na seção "Momentos de Fé" na homepage. Aparece em ordem de adição.</div>
+      <div class="card-box">
+        <div class="card-box-header"><h2>Fotos (<span id="gallery-count">0</span>)</h2></div>
+        <div style="padding:20px">
+          <div class="gallery-upload-box" onclick="document.getElementById('gallery-upload-input').click()">
+            <div style="font-size:2rem;margin-bottom:8px">🖼</div>
+            <strong>Clique para adicionar fotos</strong>
+            <div style="font-size:.82rem;color:var(--light);margin-top:4px">JPG ou PNG · múltiplos arquivos permitidos</div>
+          </div>
+          <input type="file" id="gallery-upload-input" accept="image/*" multiple style="display:none" onchange="addGalleryImages(this)">
+          <div class="gallery-grid-admin" id="gallery-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPORT -->
+    <div class="page" id="page-export">
+      <div class="page-title">Exportar ZIP</div>
+      <div class="page-sub">Gera um arquivo ZIP completo com todas as suas alterações, pronto para subir no GitHub.</div>
+      <div class="export-box">
+        <h2>📦 Como publicar as alterações</h2>
+        <p>Faça todas as edições no admin, exporte o ZIP, extraia e envie os arquivos para o GitHub.</p>
+        <div class="export-steps">
+          <div class="export-step"><div class="export-step-num">1</div><p>Faça suas alterações no admin (peregrinações, galeria)</p></div>
+          <div class="export-step"><div class="export-step-num">2</div><p>Clique em "Exportar ZIP" abaixo</p></div>
+          <div class="export-step"><div class="export-step-num">3</div><p>Extraia o ZIP no computador</p></div>
+          <div class="export-step"><div class="export-step-num">4</div><p>Suba os arquivos extraídos no GitHub — site atualizado!</p></div>
+        </div>
+        <button class="btn btn-gold" style="font-size:1rem;padding:14px 32px" id="export-btn" onclick="exportZip()">
+          ⬇ Exportar ZIP Atualizado
+        </button>
+        <p style="margin-top:14px;font-size:.8rem;opacity:.7">O ZIP inclui: js/data.js atualizado + todos os arquivos do site + imagens</p>
+      </div>
+      <div id="export-log"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: ADD / EDIT PILGRIMAGE -->
+<div class="modal-backdrop" id="pil-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Nova Peregrinação</h3>
+      <button class="modal-close" onclick="closeModal('pil-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg span2"><label>Título *</label><input id="f-title" placeholder="Ex: Terra Santa – Julho 2026"></div>
+        <div class="fg span2"><label>Destino (badge) *</label><input id="f-dest" placeholder="Ex: Israel · Palestina"></div>
+        <div class="fg"><label>Mês *</label>
+          <select id="f-month">
+            <option value="">— Selecione —</option>
+            <option value="1">Janeiro</option><option value="2">Fevereiro</option>
+            <option value="3">Março</option><option value="4">Abril</option>
+            <option value="5">Maio</option><option value="6">Junho</option>
+            <option value="7">Julho</option><option value="8">Agosto</option>
+            <option value="9">Setembro</option><option value="10">Outubro</option>
+            <option value="11">Novembro</option><option value="12">Dezembro</option>
+          </select>
+        </div>
+        <div class="fg"><label>Ano *</label><input id="f-year" type="number" min="2026" max="2035" placeholder="2026"></div>
+        <div class="fg"><label>Dia de início</label><input id="f-day" type="number" min="1" max="31" placeholder="1"></div>
+        <div class="fg"><label>Duração</label><input id="f-duration" placeholder="Ex: 10 dias"></div>
+        <div class="fg span2"><label>Data (texto exibido no site)</label><input id="f-datelabel" placeholder="Ex: 07 a 16 de Julho de 2026"></div>
+        <div class="fg"><label>Preço total</label><input id="f-price" placeholder="Ex: R$ 23.980,00"></div>
+        <div class="fg"><label>Entrada / Reserva</label><input id="f-entry" placeholder="Ex: R$ 4.000,00"></div>
+        <div class="fg"><label>Número de parcelas</label><input id="f-installments" type="number" placeholder="Ex: 8"></div>
+        <div class="fg"><label>Status *</label>
+          <select id="f-status">
+            <option value="confirmado">✅ Confirmado</option>
+            <option value="pendente">🕐 Pendente / Aguardando grupo</option>
+            <option value="ultimas_vagas">⚠️ Últimas Vagas</option>
+            <option value="esgotada">🚫 Esgotada</option>
+            <option value="cancelado">❌ Cancelado</option>
+            <option value="em_planejamento">📋 Em Planejamento</option>
+          </select>
+        </div>
+        <div class="fg"><label>Categoria *</label>
+          <select id="f-category">
+            <option value="saojose">São José</option>
+            <option value="cancaonova">Canção Nova</option>
+          </select>
+        </div>
+        <div class="fg span2"><label>Aparece na página Canção Nova?</label>
+          <select id="f-cancaonova">
+            <option value="false">Não</option>
+            <option value="true">Sim – exibir na página Canção Nova</option>
+          </select>
+        </div>
+        <div class="fg span2"><label>Link da página de detalhes</label><input id="f-href" placeholder="Ex: terra-santa-julho-2026.html"></div>
+        <div class="fg span2"><label>Descrição *</label><textarea id="f-desc" rows="3" placeholder="Descreva o roteiro, destinos e diferenciais da peregrinação..."></textarea></div>
+
+        <!-- Image upload -->
+        <div class="fg span2">
+          <label>Imagem de capa</label>
+          <div id="img-upload-area" class="img-preview-placeholder" onclick="document.getElementById('f-img-file').click()">
+            <span style="font-size:1.6rem">🖼</span>
+            <span style="font-size:.85rem">Clique para selecionar imagem</span>
+            <span style="font-size:.75rem;color:var(--light)">JPG ou PNG recomendado</span>
+          </div>
+          <input type="file" id="f-img-file" accept="image/*" style="display:none" onchange="previewCoverImg(this)">
+          <input type="hidden" id="f-img-path">
+          <input type="hidden" id="f-img-data">
+          <div id="img-remove-btn" style="display:none;margin-top:6px">
+            <button type="button" class="btn btn-danger" style="font-size:.78rem;padding:5px 10px" onclick="removeCoverImg()">✕ Remover imagem</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPIRITUAL DIRECTORS -->
+      <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:18px">
+        <div class="section-hdr">
+          <h3>Diretores Espirituais</h3>
+          <button type="button" class="btn btn-secondary" style="font-size:.78rem;padding:5px 10px" onclick="addDirectorRow()">+ Adicionar</button>
+        </div>
+        <div id="director-list"><p style="color:var(--light);font-size:.83rem">Nenhum diretor adicionado. Esta peregrinação não terá acompanhamento espiritual listado.</p></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('pil-modal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePilgrimage()">💾 Salvar Peregrinação</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONFIRM DELETE -->
+<div class="modal-backdrop" id="del-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header"><h3>Confirmar exclusão</h3><button class="modal-close" onclick="closeModal('del-modal')">×</button></div>
+    <div class="modal-body"><p id="del-msg" style="color:var(--mid);line-height:1.6"></p></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('del-modal')">Cancelar</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Excluir</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script>
+/* ===================================================
+   SÃO JOSÉ ADMIN — v2.0
+   Admin CMS that manages js/data.js and exports ZIP
+=================================================== */
+
+const CREDS = { user: 'admin', pass: 'saojose2026' };
+
+// Working data — cloned from data.js on load
+let DATA = [];
+let GALLERY = [];
+let NEW_IMAGES = []; // { path, base64 } — new files to include in ZIP
+
+let _editingId = null;
+let _deletingId = null;
+let _directorList = [];
+
+/* ── AUTH ─────────────────────────────────────── */
+function doLogin() {
+  const u = document.getElementById('l-user').value.trim();
+  const p = document.getElementById('l-pass').value;
+  if (u === CREDS.user && p === CREDS.pass) {
+    document.getElementById('l-err').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    // Deep clone data.js into working copy
+    DATA = JSON.parse(JSON.stringify(SJ_DATA.pilgrimages));
+    GALLERY = JSON.parse(JSON.stringify(SJ_DATA.gallery || []));
+    NEW_IMAGES = [];
+    renderAll();
+  } else {
+    document.getElementById('l-err').style.display = 'block';
+  }
+}
+function doLogout() {
+  document.getElementById('admin-app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('l-user').value = '';
+  document.getElementById('l-pass').value = '';
+}
+document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('l-user').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+/* ── NAVIGATION ───────────────────────────────── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pg = document.getElementById('page-' + name);
+  if (pg) pg.classList.add('active');
+  const ni = document.getElementById('nav-' + name);
+  if (ni) ni.classList.add('active');
+}
+
+/* ── RENDER ALL ───────────────────────────────── */
+function renderAll() {
+  renderDash();
+  renderPilTable();
+  renderGalleryAdmin();
+}
+
+/* ── STATUS ───────────────────────────────────── */
+const STATUS_MAP = {
+  confirmado:      { label: 'Confirmado',        cls: 'badge-green' },
+  pendente:        { label: 'Aguardando grupo',   cls: 'badge-yellow' },
+  ultimas_vagas:   { label: 'Últimas Vagas',      cls: 'badge-orange' },
+  esgotada:        { label: 'Esgotada',           cls: 'badge-gray' },
+  cancelado:       { label: 'Cancelado',          cls: 'badge-red' },
+  em_planejamento: { label: 'Em Planejamento',    cls: 'badge-blue' },
+};
+function statusBadge(s) {
+  const i = STATUS_MAP[s] || { label: s, cls: 'badge-gray' };
+  return `<span class="badge ${i.cls}">${i.label}</span>`;
+}
+
+/* ── SORT PILGRIMAGES ─────────────────────────── */
+function sortedPilgrimages() {
+  return [...DATA].sort((a, b) => {
+    const da = a.year ? new Date(a.year, (a.month || 1) - 1, a.dayStart || 1) : null;
+    const db = b.year ? new Date(b.year, (b.month || 1) - 1, b.dayStart || 1) : null;
+    if (da && db) return da - db;
+    if (da) return -1;
+    if (db) return 1;
+    return 0;
+  });
+}
+
+/* ── DASHBOARD ────────────────────────────────── */
+function renderDash() {
+  const total = DATA.length;
+  const confirmed = DATA.filter(p => p.status === 'confirmado').length;
+  const cn = DATA.filter(p => p.cancaoNova).length;
+  const withImg = DATA.filter(p => p.img).length;
+  document.getElementById('dash-stats').innerHTML = [
+    { v: total,     l: 'Peregrinações' },
+    { v: confirmed, l: 'Confirmadas' },
+    { v: cn,        l: 'Canção Nova' },
+    { v: withImg,   l: 'Com Imagem' },
+    { v: GALLERY.length, l: 'Fotos na Galeria' },
+  ].map(s => `<div class="stat"><div class="stat-val">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('');
+
+  document.getElementById('dash-table').innerHTML = sortedPilgrimages().map(p => {
+    const imgHtml = p.img
+      ? `<img class="thumb" src="${p.img}" alt="" onerror="this.style.display='none'">`
+      : `<div class="no-img">Sem img</div>`;
+    const catLabel = p.cancaoNova
+      ? `<span class="badge badge-blue">Canção Nova</span>`
+      : `<span class="badge badge-gray">São José</span>`;
+    return `<tr>
+      <td>${imgHtml}</td>
+      <td><strong style="font-size:.87rem">${p.title}</strong></td>
+      <td style="white-space:nowrap">${p.month ? p.month + '/' + p.year : '—'}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td>${catLabel}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── PILGRIMAGES TABLE ────────────────────────── */
+function renderPilTable() {
+  const rows = sortedPilgrimages();
+  document.getElementById('pil-count').textContent = rows.length;
+  document.getElementById('pil-table').innerHTML = rows.map(p => {
+    const imgHtml = p.img
+      ? `<img class="thumb" src="${p.img}" alt="" onerror="this.style.display='none'">`
+      : `<div class="no-img">Sem img</div>`;
+    const catLabel = p.cancaoNova
+      ? `<span class="badge badge-blue">Canção Nova</span>`
+      : `<span class="badge badge-gray">São José</span>`;
+    return `<tr>
+      <td>${imgHtml}</td>
+      <td><strong style="font-size:.87rem">${p.title}</strong></td>
+      <td style="white-space:nowrap">${p.month ? p.month + '/' + p.year : '—'}</td>
+      <td>${statusBadge(p.status)}</td>
+      <td>${catLabel}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-secondary" onclick="openEditModal('${p.id}')" style="margin-right:5px;font-size:.78rem;padding:6px 10px">✏️ Editar</button>
+        <button class="btn btn-danger" onclick="openDeleteModal('${p.id}')" style="font-size:.78rem;padding:6px 10px">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── GALLERY ADMIN ────────────────────────────── */
+function renderGalleryAdmin() {
+  document.getElementById('gallery-count').textContent = GALLERY.length;
+  const grid = document.getElementById('gallery-grid');
+  if (GALLERY.length === 0) {
+    grid.innerHTML = '<p style="color:var(--light);font-size:.85rem;padding:12px 0">Nenhuma foto adicionada. Clique acima para fazer upload.</p>';
+    return;
+  }
+  grid.innerHTML = GALLERY.map((g, i) => `
+    <div class="gallery-item-admin">
+      <img src="${g.src}" alt="${g.alt || ''}" onerror="this.parentElement.style.background='#ccc'">
+      <button class="rm-btn" onclick="removeGalleryImg(${i})" title="Remover foto">×</button>
+    </div>`).join('');
+}
+
+function addGalleryImages(input) {
+  const files = Array.from(input.files);
+  let loaded = 0;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const base64 = e.target.result.split(',')[1];
+      const path = 'assets/images/gallery/' + file.name;
+      GALLERY.push({ src: path, alt: file.name.replace(/\.[^.]+$/, '') });
+      NEW_IMAGES.push({ path, base64 });
+      loaded++;
+      if (loaded === files.length) renderGalleryAdmin();
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value = '';
+}
+
+function removeGalleryImg(idx) {
+  GALLERY.splice(idx, 1);
+  renderGalleryAdmin();
+}
+
+/* ── MODAL HELPERS ────────────────────────────── */
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function openAddModal() {
+  _editingId = null;
+  document.getElementById('modal-title').textContent = 'Nova Peregrinação';
+  clearForm();
+  document.getElementById('pil-modal').classList.add('open');
+}
+
+function openEditModal(id) {
+  _editingId = id;
+  const p = DATA.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-title').textContent = 'Editar Peregrinação';
+  document.getElementById('f-title').value       = p.title || '';
+  document.getElementById('f-dest').value        = p.destination || '';
+  document.getElementById('f-month').value       = p.month || '';
+  document.getElementById('f-year').value        = p.year || '';
+  document.getElementById('f-day').value         = p.dayStart || '';
+  document.getElementById('f-duration').value    = p.duration || '';
+  document.getElementById('f-datelabel').value   = p.dateLabel || '';
+  document.getElementById('f-price').value       = p.price || '';
+  document.getElementById('f-entry').value       = p.entryPayment || '';
+  document.getElementById('f-installments').value = p.installments || '';
+  document.getElementById('f-status').value      = p.status || 'confirmado';
+  document.getElementById('f-category').value    = p.category || 'saojose';
+  document.getElementById('f-cancaonova').value  = p.cancaoNova ? 'true' : 'false';
+  document.getElementById('f-href').value        = p.href || '';
+  document.getElementById('f-desc').value        = p.description || '';
+  document.getElementById('f-img-path').value    = p.img || '';
+  document.getElementById('f-img-data').value    = '';
+  // Show cover image
+  const area = document.getElementById('img-upload-area');
+  if (p.img) {
+    area.innerHTML = `<img src="${p.img}" class="img-preview-shown" onclick="document.getElementById('f-img-file').click()" onerror="this.parentElement.innerHTML='<span>Imagem não encontrada</span>'">`;
+    document.getElementById('img-remove-btn').style.display = 'block';
+  } else {
+    area.innerHTML = `<span style="font-size:1.6rem">🖼</span><span style="font-size:.85rem">Clique para selecionar imagem</span>`;
+    document.getElementById('img-remove-btn').style.display = 'none';
+  }
+  renderDirectors(p.directors || []);
+  document.getElementById('pil-modal').classList.add('open');
+}
+
+function clearForm() {
+  ['f-title','f-dest','f-month','f-year','f-day','f-duration','f-datelabel',
+   'f-price','f-entry','f-installments','f-href','f-desc','f-img-path','f-img-data'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-status').value = 'confirmado';
+  document.getElementById('f-category').value = 'saojose';
+  document.getElementById('f-cancaonova').value = 'false';
+  document.getElementById('img-upload-area').innerHTML = `<span style="font-size:1.6rem">🖼</span><span style="font-size:.85rem">Clique para selecionar imagem</span><span style="font-size:.75rem;color:var(--light)">JPG ou PNG recomendado</span>`;
+  document.getElementById('img-remove-btn').style.display = 'none';
+  renderDirectors([]);
+}
+
+/* ── IMAGE UPLOAD ─────────────────────────────── */
+function previewCoverImg(input) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result.split(',')[1];
+    const title = document.getElementById('f-title').value.trim();
+    const slug = title ? slugify(title) : slugify(file.name.replace(/\.[^.]+$/, ''));
+    const ext = file.name.split('.').pop().toLowerCase();
+    const path = 'assets/images/pilgrimages/' + slug + '.' + ext;
+    // Update hidden fields
+    document.getElementById('f-img-path').value = path;
+    document.getElementById('f-img-data').value = base64;
+    // Preview
+    const area = document.getElementById('img-upload-area');
+    area.innerHTML = `<img src="${e.target.result}" class="img-preview-shown" onclick="document.getElementById('f-img-file').click()">`;
+    document.getElementById('img-remove-btn').style.display = 'block';
+    // Register for ZIP
+    const existing = NEW_IMAGES.findIndex(i => i.path === path);
+    if (existing >= 0) NEW_IMAGES[existing] = { path, base64 };
+    else NEW_IMAGES.push({ path, base64 });
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeCoverImg() {
+  document.getElementById('f-img-path').value = '';
+  document.getElementById('f-img-data').value = '';
+  const area = document.getElementById('img-upload-area');
+  area.innerHTML = `<span style="font-size:1.6rem">🖼</span><span style="font-size:.85rem">Clique para selecionar imagem</span>`;
+  document.getElementById('img-remove-btn').style.display = 'none';
+}
+
+/* ── DIRECTORS ────────────────────────────────── */
+function renderDirectors(dirs) {
+  _directorList = dirs.map(d => ({ ...d }));
+  _refreshDirectorDOM();
+}
+
+function _refreshDirectorDOM() {
+  var el = document.getElementById('director-list');
+  if (_directorList.length === 0) {
+    el.innerHTML = '<p style="color:var(--light);font-size:.83rem">Nenhum diretor adicionado.</p>';
+    return;
+  }
+  var html = '';
+  for (var i = 0; i < _directorList.length; i++) {
+    var d = _directorList[i];
+    var safeName = (d.name || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    var safeRole = (d.role || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    var avatarHtml = d.photo
+      ? ('<img src="' + d.photo + '" alt="' + safeName + '" style="width:42px;height:42px;border-radius:50%;object-fit:cover">')
+      : '<span style="font-size:1.4rem">&#128100;</span>';
+    var photoBtns = d.photo
+      ? ('<button type="button" class="btn btn-secondary" style="font-size:.7rem;padding:3px 7px" onclick="triggerDirectorPhoto(' + i + ')">&#128260; Trocar foto</button>'
+       + ' <button type="button" class="btn btn-danger" style="font-size:.7rem;padding:3px 7px" onclick="removeDirectorPhoto(' + i + ')">&#10005; Remover foto</button>')
+      : ('<button type="button" class="btn btn-secondary" style="font-size:.7rem;padding:3px 7px" onclick="triggerDirectorPhoto(' + i + ')">&#128247; Adicionar foto</button>');
+    html += '<div class="director-row" id="drow-' + i + '">'
+          +   '<div class="director-avatar" style="cursor:pointer" onclick="triggerDirectorPhoto(' + i + ')" title="Clique para foto">'
+          +     avatarHtml
+          +   '</div>'
+          +   '<div class="director-info" style="flex:1">'
+          +     '<input value="' + safeName + '" placeholder="Nome completo" onchange="_directorList[' + i + '].name=this.value">'
+          +     '<input value="' + safeRole + '" placeholder="Cargo (ex: Diretor Espiritual)" onchange="_directorList[' + i + '].role=this.value">'
+          +     '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">' + photoBtns + '</div>'
+          +   '</div>'
+          +   '<button class="btn btn-danger" style="padding:5px 8px;font-size:.75rem;align-self:flex-start" onclick="_directorList.splice(' + i + ',1);_refreshDirectorDOM()">&#10005;</button>'
+          +   '<input type="file" id="dphoto-' + i + '" accept="image/*" style="display:none" onchange="uploadDirectorPhoto(this,' + i + ')">'
+          + '</div>';
+  }
+  el.innerHTML = html;
+}
+
+function triggerDirectorPhoto(i) {
+  const inp = document.getElementById('dphoto-' + i);
+  if (inp) inp.click();
+}
+
+function uploadDirectorPhoto(input, i) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result.split(',')[1];
+    const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
+    const dirName = slugify((_directorList[i].name || 'diretor-' + i));
+    const path = 'assets/images/directors/' + dirName + '.' + ext;
+    _directorList[i].photo = path;
+    // Register for ZIP
+    const existIdx = NEW_IMAGES.findIndex(x => x.path === path);
+    if (existIdx >= 0) NEW_IMAGES[existIdx] = { path, base64 };
+    else NEW_IMAGES.push({ path, base64 });
+    _refreshDirectorDOM();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeDirectorPhoto(i) {
+  _directorList[i].photo = null;
+  _refreshDirectorDOM();
+}
+
+function addDirectorRow() {
+  _directorList.push({ name: '', role: 'Diretor Espiritual', photo: null });
+  _refreshDirectorDOM();
+}
+
+/* ── SAVE PILGRIMAGE ──────────────────────────── */
+function savePilgrimage() {
+  const title = document.getElementById('f-title').value.trim();
+  const dest  = document.getElementById('f-dest').value.trim();
+  if (!title) { alert('O título é obrigatório.'); return; }
+  if (!dest)  { alert('O destino (badge) é obrigatório.'); return; }
+
+  const id = _editingId || (slugify(title) + '-' + Date.now());
+  const imgPath = document.getElementById('f-img-path').value || null;
+
+  const newPil = {
+    id,
+    title,
+    destination: dest,
+    month:        parseInt(document.getElementById('f-month').value) || null,
+    year:         parseInt(document.getElementById('f-year').value) || null,
+    dayStart:     parseInt(document.getElementById('f-day').value) || 1,
+    dateLabel:    document.getElementById('f-datelabel').value.trim() || 'Data a confirmar',
+    duration:     document.getElementById('f-duration').value.trim() || 'A confirmar',
+    price:        document.getElementById('f-price').value.trim() || null,
+    entryPayment: document.getElementById('f-entry').value.trim() || null,
+    installments: parseInt(document.getElementById('f-installments').value) || null,
+    description:  document.getElementById('f-desc').value.trim(),
+    img:          imgPath,
+    href:         document.getElementById('f-href').value.trim() || 'peregrinacao-detalhe.html',
+    category:     document.getElementById('f-category').value,
+    status:       document.getElementById('f-status').value,
+    cancaoNova:   document.getElementById('f-cancaonova').value === 'true',
+    directors:    _directorList.filter(d => d.name && d.name.trim()),
+  };
+
+  if (_editingId) {
+    const idx = DATA.findIndex(p => p.id === _editingId);
+    if (idx >= 0) DATA[idx] = newPil;
+  } else {
+    DATA.push(newPil);
+  }
+
+  closeModal('pil-modal');
+  renderAll();
+}
+
+/* ── DELETE ───────────────────────────────────── */
+function openDeleteModal(id) {
+  _deletingId = id;
+  const p = DATA.find(x => x.id === id);
+  document.getElementById('del-msg').textContent =
+    `Tem certeza que deseja excluir "${p ? p.title : id}"?\n\nEsta ação removerá a peregrinação de todas as páginas do site após exportar o ZIP.`;
+  document.getElementById('del-modal').classList.add('open');
+}
+function confirmDelete() {
+  DATA = DATA.filter(p => p.id !== _deletingId);
+  _deletingId = null;
+  closeModal('del-modal');
+  renderAll();
+}
+
+/* ── UTILS ────────────────────────────────────── */
+function slugify(str) {
+  return (str || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '').trim()
+    .replace(/\s+/g, '-').replace(/-+/g, '-').slice(0, 60);
+}
+
+/* ================================================================
+   EXPORT ZIP
+================================================================ */
+async function exportZip() {
+  const btn = document.getElementById('export-btn');
+  btn.textContent = '⏳ Gerando ZIP...';
+  btn.disabled = true;
+  document.getElementById('export-log').innerHTML = '';
+
+  try {
+    const zip = new JSZip();
+
+    // 1 — Generate updated data.js
+    zip.file('js/data.js', generateDataJs());
+
+    // 2 — Fetch all HTML + CSS + JS files
+    const textFiles = [
+      'index.html','peregrinacoes.html','cancao-nova.html','calendario.html',
+      'admin.html','sobre.html','contato.html','galeria.html',
+      'aparecida-marco-2026.html','italia-abril-2026.html',
+      'belgica-maio-2026.html','portugal-espanha-franca-maio-2026.html',
+      'mexico-maio-2026.html','franca-junho-2026.html','italia-junho-2026.html',
+      'terra-santa-julho-2026.html','italia-franca-julho-2026.html',
+      'portugal-italia-agosto-2026.html','republica-tcheca-agosto-2026.html',
+      'grecia-turquia-julho-2026.html','peregrinacao-detalhe.html',
+      '_components.html','css/style.css','js/main.js',
+      'LICENSE','README.md',
+    ];
+    for (const f of textFiles) {
+      try {
+        const res = await fetch(f);
+        if (res.ok) zip.file(f, await res.text());
+      } catch(e) { /* skip missing */ }
+    }
+
+    // 3 — Fetch existing binary images
+    const imgPaths = [
+      'assets/images/logo.jpg','assets/images/sao-jose-navbar.png',
+      'assets/images/dev-lucas-logo.png','assets/images/monsenhor-jonas-abib.png',
+      'assets/images/padre-renne-viana.png','assets/images/pitter-di-laura.jpg',
+      'assets/images/padre-linniker.png','assets/images/padre-jesu.png',
+      'assets/images/sonia-venancio.png','assets/images/padre-alessandro.jpg',
+      'assets/images/salette-ferreira.jpg','assets/images/padre-marcio-reis.jpg',
+      'assets/images/padre-edilberto.png','assets/images/emanuel-stenio.png',
+      'assets/images/pilgrimages/aparecida-marco-2026.jpg',
+      'assets/images/pilgrimages/italia-abril-2026.jpg',
+      'assets/images/pilgrimages/belgica-maio-2026.jpg',
+      'assets/images/pilgrimages/portugal-espanha-franca-maio-2026.jpg',
+      'assets/images/pilgrimages/mexico-maio-2026.jpg',
+      'assets/images/pilgrimages/franca-junho-2026.jpg',
+      'assets/images/pilgrimages/italia-junho-2026.jpg',
+      'assets/images/pilgrimages/terra-santa-julho-2026.jpg',
+      'assets/images/pilgrimages/italia-franca-julho-2026.jpg',
+      'assets/images/pilgrimages/portugal-italia-agosto-2026.jpg',
+      'assets/images/pilgrimages/republica-tcheca-agosto-2026.jpg',
+      'assets/images/pilgrimages/grecia-turquia-capadocia-agosto-2026.jpg',
+      'assets/images/pilgrimages/grecia-turquia-julho-2026.jpg',
+    ];
+    for (const f of imgPaths) {
+      try {
+        const res = await fetch(f);
+        if (res.ok) zip.file(f, await res.arrayBuffer());
+      } catch(e) { /* skip missing */ }
+    }
+
+    // 4 — Include newly uploaded images (from admin session)
+    for (const img of NEW_IMAGES) {
+      const bin = atob(img.base64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      zip.file(img.path, bytes);
+    }
+
+    // 5 — Generate and download
+    const blob = await zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: { level: 6 }
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sao-jose-site-atualizado.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    document.getElementById('export-log').innerHTML =
+      `<div class="alert-success">✅ ZIP gerado com sucesso! Salvo como <strong>sao-jose-site-atualizado.zip</strong>.<br>Extraia o arquivo e envie os arquivos para o seu repositório no GitHub para publicar as alterações.</div>`;
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('export-log').innerHTML =
+      `<div class="alert-error">❌ Erro ao gerar ZIP: ${err.message}</div>`;
+  } finally {
+    btn.textContent = '⬇ Exportar ZIP Atualizado';
+    btn.disabled = false;
+  }
+}
+
+/* ── GENERATE data.js FROM CURRENT WORKING DATA ── */
+function generateDataJs() {
+  return `/* ============================================================
+   SÃO JOSÉ – DADOS CENTRALIZADOS
+   js/data.js — Fonte única de verdade para todo o conteúdo
+   Gerado pelo Admin em: ${new Date().toLocaleString('pt-BR')}
+   ============================================================ */
+
+const SJ_DATA = {
+  pilgrimages: ${JSON.stringify(DATA, null, 2)},
+  gallery: ${JSON.stringify(GALLERY, null, 2)},
+  meta: { lastUpdated: "${new Date().toISOString()}" }
+};
+
+// ── STATUS HELPERS ─────────────────────────────────────
+SJ_DATA.getStatusHTML = function(status) {
+  const map = {
+    confirmado:      '<span class="status-confirmed">&#10004; Confirmada</span>',
+    pendente:        '<span class="status-awaiting">&#9679; Aguardando grupo</span>',
+    cancelado:       '<span class="status-awaiting" style="color:#c0392b;">&#10008; Cancelada</span>',
+    ultimas_vagas:   '<span class="status-confirmed" style="color:#e67e22;">&#9650; Últimas Vagas</span>',
+    esgotada:        '<span class="status-awaiting" style="color:#888;">&#9679; Esgotada</span>',
+    em_planejamento: '<span class="status-awaiting" style="color:#2980b9;">&#9675; Em Planejamento</span>',
+  };
+  return map[status] || map['pendente'];
+};
+
+SJ_DATA.getBorderStyle = function(p) {
+  if (p.category === 'cancaonova') return 'border:2px solid #1a3a6b;';
+  if (p.status === 'confirmado') return 'border:2px solid var(--green-dark);';
+  return '';
+};
+
+SJ_DATA.getDate = function(p) {
+  if (!p.year || !p.month) return null;
+  return new Date(p.year, p.month - 1, p.dayStart || 1);
+};
+
+// isVisible: hides Esgotada and Cancelado from homepage automatically
+SJ_DATA.isVisible = function(p) {
+  return p.status !== 'cancelado' && p.status !== 'esgotada';
+};
+`;
+}
+</script>
+</body>
+</html>

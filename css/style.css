@@ -1318,3 +1318,214 @@ footer {
 .cal-year-toggle.open svg { transform: rotate(180deg); }
 .cal-next-year { margin-top: 0; overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
 .cal-next-year.open { max-height: 9999px; }
+
+/* ── Extra status classes added for admin ──────────────── */
+.status-cancelled  { display:inline-block;color:#c0392b;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+.status-last-spots { display:inline-block;color:#e67e22;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+.status-sold-out   { display:inline-block;color:#888;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+.status-planning   { display:inline-block;color:#2980b9;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+
+/* ── Calendar Entry Cards ─────────────────────────────── */
+.cal-year-section { margin-bottom: 48px; }
+.cal-year-heading {
+  font-size: 1.6rem; font-weight: 700; color: var(--green-dark);
+  padding-bottom: 12px; border-bottom: 3px solid var(--gold);
+  margin-bottom: 32px; font-family: 'Cinzel', serif;
+}
+.cal-month-block { margin-bottom: 36px; }
+.cal-month-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.cal-month-name {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.cal-entry {
+  display: flex; gap: 20px; align-items: flex-start;
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 20px 24px;
+  margin-bottom: 14px; box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.cal-entry:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.cal-entry-date {
+  min-width: 60px; text-align: center; background: var(--green-dark);
+  color: var(--white); border-radius: 8px; padding: 10px 8px; flex-shrink: 0;
+}
+.cal-entry-date .cal-month { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+.cal-entry-date .cal-day { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.cal-entry-date .cal-year { font-size: 0.68rem; opacity: 0.7; margin-top: 2px; }
+.cal-entry-body { flex: 1; min-width: 0; }
+.cal-entry-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.cal-entry-desc { font-size: 0.87rem; color: var(--text-mid); margin-bottom: 10px; line-height: 1.5; }
+.cal-entry-meta {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-size: 0.82rem; color: var(--text-mid);
+}
+.cal-entry-meta span { display: flex; align-items: center; gap: 4px; }
+@media (max-width: 600px) {
+  .cal-entry { flex-direction: column; gap: 14px; }
+  .cal-entry-date { display: flex; gap: 8px; align-items: center; min-width: auto; width: fit-content; border-radius: 6px; padding: 6px 12px; }
+  .cal-entry-date .cal-day { font-size: 1.1rem; }
+}
+
+/* ── STATUS OVERLAYS ──────────────────────────────────── */
+.card-media-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* CANCELADA — glass overlay + red stamp */
+.card-cancelada-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.70);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.card-cancelada-stamp {
+  background: #c0392b;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 4px;
+  border: 3px solid rgba(255,255,255,0.6);
+  transform: rotate(-8deg);
+  box-shadow: 0 4px 20px rgba(192,57,43,0.4);
+  pointer-events: none;
+}
+.card--cancelada {
+  opacity: 0.82;
+  filter: grayscale(0.3);
+}
+.card--cancelada:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-sm) !important;
+  cursor: default;
+}
+.card--cancelada .card-body h3 {
+  text-decoration: line-through;
+  color: var(--text-mid);
+}
+.card--cancelada .btn-blocked {
+  background: #ccc !important;
+  color: #888 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* ESGOTADA — stamp on image */
+.card-esgotada-stamp {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 3px;
+  z-index: 2;
+}
+
+/* WAITING LIST button */
+.btn-waitlist {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: #fff;
+  color: #1a1a2e;
+  border: 2px solid #1a1a2e;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  font-family: inherit;
+  margin-top: 8px;
+}
+.btn-waitlist:hover {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+/* SUGGESTION BOX on esgotada cards */
+.card-suggestion {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #f0faf4;
+  border-radius: 8px;
+  border-left: 3px solid var(--green-dark);
+  font-size: 0.82rem;
+  color: var(--text-mid);
+}
+.card-suggestion strong {
+  display: block;
+  color: var(--green-dark);
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.card-suggestion a {
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+.card-suggestion a:hover { text-decoration: underline; }
+
+/* Waitlist mini-form */
+.waitlist-form {
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 14px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.waitlist-form.open { display: flex; }
+.waitlist-form input {
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.88rem;
+  outline: none;
+  font-family: inherit;
+  transition: border 0.2s;
+}
+.waitlist-form input:focus { border-color: var(--green-dark); }
+.waitlist-form .btn-wl-submit {
+  background: var(--green-dark);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-family: inherit;
+}
+.waitlist-success {
+  color: var(--green-dark);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 8px;
+}
