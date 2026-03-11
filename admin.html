@@ -666,17 +666,57 @@ function _refreshDirectorDOM() {
     el.innerHTML = '<p style="color:var(--light);font-size:.83rem">Nenhum diretor adicionado. Esta peregrinação não terá acompanhamento espiritual listado.</p>';
     return;
   }
-  el.innerHTML = _directorList.map((d, i) => `
-    <div class="director-row">
-      <div class="director-avatar">
-        ${d.photo ? `<img src="${d.photo}" alt="${d.name || ''}">` : `👤`}
+  el.innerHTML = _directorList.map((d, i) => {
+    const avatarInner = d.photo
+      ? `<img src="${d.photo}" alt="${(d.name||'').replace(/"/g,'&quot;')}" onerror="this.style.display='none'">`
+      : `<span style="font-size:1.1rem">👤</span>`;
+    const photoBtn = d.photo
+      ? `<button type="button" class="btn btn-secondary" style="font-size:.7rem;padding:3px 7px;margin-top:4px" onclick="triggerDirectorPhoto(${i})">🔄 Trocar</button>
+         <button type="button" class="btn btn-danger"    style="font-size:.7rem;padding:3px 7px;margin-top:4px" onclick="removeDirectorPhoto(${i})">✕ Remover</button>`
+      : `<button type="button" class="btn btn-secondary" style="font-size:.7rem;padding:3px 7px;margin-top:4px" onclick="triggerDirectorPhoto(${i})">📷 Foto</button>`;
+    return `
+    <div class="director-row" id="drow-${i}">
+      <div class="director-avatar" style="cursor:pointer;flex-direction:column;gap:2px" onclick="triggerDirectorPhoto(${i})">
+        ${avatarInner}
       </div>
-      <div class="director-info">
-        <input value="${(d.name || '').replace(/"/g,'&quot;')}" placeholder="Nome completo" onchange="_directorList[${i}].name=this.value">
-        <input value="${(d.role || '').replace(/"/g,'&quot;')}" placeholder="Cargo (ex: Diretor Espiritual)" onchange="_directorList[${i}].role=this.value">
+      <div class="director-info" style="flex:1">
+        <input value="${(d.name||'').replace(/"/g,'&quot;')}" placeholder="Nome completo" onchange="_directorList[${i}].name=this.value">
+        <input value="${(d.role||'').replace(/"/g,'&quot;')}" placeholder="Cargo (ex: Diretor Espiritual)" onchange="_directorList[${i}].role=this.value">
+        <div style="display:flex;gap:4px;flex-wrap:wrap">${photoBtn}</div>
       </div>
-      <button class="btn btn-danger" style="padding:5px 8px;font-size:.75rem" onclick="_directorList.splice(${i},1);_refreshDirectorDOM()">✕</button>
-    </div>`).join('');
+      <button class="btn btn-danger" style="padding:5px 8px;font-size:.75rem;align-self:flex-start" onclick="_directorList.splice(${i},1);_refreshDirectorDOM()">✕</button>
+      <input type="file" id="dphoto-${i}" accept="image/*" style="display:none" onchange="uploadDirectorPhoto(this,${i})">
+    </div>`;
+  }).join('');
+}
+
+function triggerDirectorPhoto(i) {
+  const inp = document.getElementById('dphoto-' + i);
+  if (inp) inp.click();
+}
+
+function uploadDirectorPhoto(input, i) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const base64 = e.target.result.split(',')[1];
+    const ext = file.name.split('.').pop().toLowerCase() || 'jpg';
+    const dirName = slugify((_directorList[i].name || 'diretor-' + i));
+    const path = 'assets/images/directors/' + dirName + '.' + ext;
+    _directorList[i].photo = path;
+    // Register for ZIP
+    const existIdx = NEW_IMAGES.findIndex(x => x.path === path);
+    if (existIdx >= 0) NEW_IMAGES[existIdx] = { path, base64 };
+    else NEW_IMAGES.push({ path, base64 });
+    _refreshDirectorDOM();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeDirectorPhoto(i) {
+  _directorList[i].photo = null;
+  _refreshDirectorDOM();
 }
 
 function addDirectorRow() {
