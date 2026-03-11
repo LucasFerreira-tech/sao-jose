@@ -331,8 +331,9 @@
             <option value="true">Sim – exibir na página Canção Nova</option>
           </select>
         </div>
-        <div class="fg span2"><label>Link da página de detalhes</label><input id="f-href" placeholder="Ex: terra-santa-julho-2026.html"></div>
-        <div class="fg span2"><label>Descrição *</label><textarea id="f-desc" rows="3" placeholder="Descreva o roteiro, destinos e diferenciais da peregrinação..."></textarea></div>
+        <div class="fg span2"><label>Link da página de detalhes</label><input id="f-href" placeholder="Deixe em branco para usar a página dinâmica (peregrinacao-detalhe.html?id=...)"></div>
+        <div class="fg span2"><label>Descrição curta * <span style="font-weight:400;color:var(--light)">(aparece nos cards e calendário)</span></label><textarea id="f-desc" rows="3" placeholder="Descreva brevemente o roteiro, destinos e diferenciais da peregrinação..."></textarea></div>
+        <div class="fg span2"><label>Roteiro completo <span style="font-weight:400;color:var(--light)">(aparece na página de detalhes)</span></label><textarea id="f-itinerary" rows="10" placeholder="Dia 1 – Chegada&#10;Descreva as atividades do primeiro dia...&#10;&#10;Dia 2 – [Título]&#10;Descreva as atividades...&#10;&#10;Use uma linha em branco para separar os dias."></textarea></div>
 
         <!-- Image upload -->
         <div class="fg span2">
@@ -592,6 +593,7 @@ function openEditModal(id) {
   document.getElementById('f-cancaonova').value  = p.cancaoNova ? 'true' : 'false';
   document.getElementById('f-href').value        = p.href || '';
   document.getElementById('f-desc').value        = p.description || '';
+  document.getElementById('f-itinerary').value   = p.itinerary || '';
   document.getElementById('f-img-path').value    = p.img || '';
   document.getElementById('f-img-data').value    = '';
   // Show cover image
@@ -611,7 +613,7 @@ function openEditModal(id) {
 
 function clearForm() {
   ['f-title','f-dest','f-month','f-year','f-day','f-duration','f-datelabel',
-   'f-price','f-entry','f-installments','f-href','f-desc','f-img-path','f-img-data'].forEach(id => {
+   'f-price','f-entry','f-installments','f-href','f-desc','f-itinerary','f-img-path','f-img-data'].forEach(id => {
     document.getElementById(id).value = '';
   });
   document.getElementById('f-status').value = 'confirmado';
@@ -756,8 +758,9 @@ function savePilgrimage() {
     entryPayment: document.getElementById('f-entry').value.trim() || null,
     installments: parseInt(document.getElementById('f-installments').value) || null,
     description:  document.getElementById('f-desc').value.trim(),
+    itinerary:    document.getElementById('f-itinerary').value.trim(),
     img:          imgPath,
-    href:         document.getElementById('f-href').value.trim() || 'peregrinacao-detalhe.html',
+    href:         document.getElementById('f-href').value.trim() || ('peregrinacao-detalhe.html?id=' + (id)),
     category:     document.getElementById('f-category').value,
     status:       document.getElementById('f-status').value,
     cancaoNova:   document.getElementById('f-cancaonova').value === 'true',
