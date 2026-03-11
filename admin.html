@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="assets/images/sao-jose-navbar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – São José Peregrinações</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --admin-bg: #f0f2f5;
+      --admin-sidebar: #1a2a4a;
+      --admin-accent: #2d8a4e;
+    }
+    * { box-sizing: border-box; }
+    body { background: var(--admin-bg); font-family: 'Lato', sans-serif; margin: 0; }
+
+    /* Login screen */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--admin-sidebar), var(--admin-accent));
+    }
+    .login-box {
+      background: white;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    .login-box img { width: 80px; height: 80px; object-fit: contain; border-radius: 12px; margin-bottom: 20px; }
+    .login-box h1 { font-size: 1.4rem; color: var(--admin-sidebar); margin-bottom: 4px; }
+    .login-box p { color: #888; font-size: 0.9rem; margin-bottom: 32px; }
+    .form-group { margin-bottom: 16px; text-align: left; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #444; margin-bottom: 6px; }
+    .form-group input {
+      width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb;
+      border-radius: 8px; font-size: 1rem; outline: none; transition: border 0.2s;
+    }
+    .form-group input:focus { border-color: var(--admin-accent); }
+    .btn-login {
+      width: 100%; padding: 14px; background: var(--admin-accent); color: white;
+      border: none; border-radius: 8px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s; margin-top: 8px;
+    }
+    .btn-login:hover { background: #245e38; }
+    .login-error { color: #e53e3e; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    /* Admin layout */
+    #admin-app { display: none; min-height: 100vh; }
+    .admin-topbar {
+      background: var(--admin-sidebar); color: white;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 60px; position: sticky; top: 0; z-index: 100;
+    }
+    .admin-topbar .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; }
+    .admin-topbar .brand img { width: 36px; height: 36px; object-fit: contain; border-radius: 6px; }
+    .admin-topbar .topbar-actions { display: flex; align-items: center; gap: 16px; }
+    .btn-logout {
+      padding: 8px 16px; background: rgba(255,255,255,0.15); border: none;
+      color: white; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: background 0.2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.25); }
+
+    .admin-content { padding: 32px 24px; max-width: 1200px; margin: 0 auto; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: white; border-radius: 12px; padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 16px;
+    }
+    .stat-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+    }
+    .stat-card h3 { font-size: 1.8rem; margin: 0; color: #1a1a2e; }
+    .stat-card p { margin: 4px 0 0; color: #888; font-size: 0.85rem; }
+
+    /* Section header */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .section-header h2 { font-size: 1.2rem; color: #1a1a2e; margin: 0; }
+
+    /* Table */
+    .admin-table-wrap { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; margin-bottom: 32px; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th { background: #f8f9fa; padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: #666; border-bottom: 1px solid #e5e7eb; }
+    .admin-table td { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; color: #333; vertical-align: middle; }
+    .admin-table tr:last-child td { border-bottom: none; }
+    .admin-table tr:hover td { background: #f9fafb; }
+
+    /* Badges */
+    .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .badge-confirmed { background: #d1fae5; color: #065f46; }
+    .badge-awaiting { background: #fef3c7; color: #92400e; }
+    .badge-cn { background: #dbeafe; color: #1e40af; }
+
+    /* Buttons */
+    .btn-sm { padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; transition: background 0.2s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-primary-sm { background: var(--admin-accent); color: white; }
+    .btn-primary-sm:hover { background: #245e38; }
+    .btn-ghost-sm { background: #f3f4f6; color: #444; }
+    .btn-ghost-sm:hover { background: #e5e7eb; }
+
+    /* Pilgrimage cover thumb */
+    .cover-thumb { width: 56px; height: 40px; object-fit: cover; border-radius: 6px; background: #eee; }
+    .cover-placeholder { width: 56px; height: 40px; border-radius: 6px; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 0.7rem; }
+
+    @media (max-width: 768px) {
+      .admin-table th:nth-child(3), .admin-table td:nth-child(3),
+      .admin-table th:nth-child(4), .admin-table td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+    <img src="assets/images/logo.jpg" alt="São José">
+    <h1>Área Administrativa</h1>
+    <p>São José Artigos Religiosos e Peregrinações</p>
+    <div class="form-group">
+      <label for="admin-user">Usuário</label>
+      <input type="text" id="admin-user" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label for="admin-pass">Senha</label>
+      <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Entrar</button>
+    <p class="login-error" id="login-error">Usuário ou senha incorretos.</p>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <div class="admin-topbar">
+    <div class="brand">
+      <img src="assets/images/logo.jpg" alt="Logo">
+      <span>São José – Admin</span>
+    </div>
+    <div class="topbar-actions">
+      <a href="index.html" class="btn-logout" target="_blank">Ver Site ↗</a>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <h1 style="font-size:1.5rem;color:#1a1a2e;margin-bottom:8px;">Dashboard</h1>
+    <p style="color:#888;margin-bottom:28px;">Gestão de peregrinações · São José Peregrinações</p>
+
+    <!-- STATS -->
+    <div class="stats-grid" id="stats-grid"></div>
+
+    <!-- PILGRIMAGES TABLE -->
+    <div class="section-header">
+      <h2>Peregrinações 2026</h2>
+      <a href="peregrinacoes.html" class="btn-sm btn-ghost-sm" target="_blank">Ver página pública ↗</a>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table" id="pil-table">
+        <thead>
+          <tr>
+            <th>Capa</th>
+            <th>Título</th>
+            <th>Data</th>
+            <th>Duração</th>
+            <th>Parceiro</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="pil-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- CANÇÃO NOVA TABLE -->
+    <div class="section-header">
+      <h2>Peregrinações Canção Nova</h2>
+      <a href="cancao-nova.html" class="btn-sm btn-ghost-sm" target="_blank">Ver página Canção Nova ↗</a>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Capa</th>
+            <th>Título</th>
+            <th>Data</th>
+            <th>Duração</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="cn-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Auth ────────────────────────────────────────────────
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'saojose2026';
+
+function doLogin() {
+  const u = document.getElementById('admin-user').value.trim();
+  const p = document.getElementById('admin-pass').value;
+  const err = document.getElementById('login-error');
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+    err.style.display = 'none';
+    renderDashboard();
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function doLogout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-app').style.display = 'none';
+  document.getElementById('admin-user').value = '';
+  document.getElementById('admin-pass').value = '';
+}
+
+// Allow Enter key on password field
+document.getElementById('admin-pass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('admin-user').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+// ── Data ────────────────────────────────────────────────
+const PILGRIMAGES = [
+  { title: "Excursão a Aparecida – Março 2026", date: "27 a 30 de Março de 2026", duration: "4 dias", partner: null, confirmed: true, img: "assets/images/pilgrimages/aparecida-marco-2026.jpg", href: "aparecida-marco-2026.html" },
+  { title: "Itália – Abril 2026", date: "07 a 18 de Abril de 2026", duration: "12 dias", partner: "Canção Nova", confirmed: true, img: "assets/images/pilgrimages/italia-abril-2026.jpg", href: "italia-abril-2026.html" },
+  { title: "Bélgica, Holanda e Alemanha – Maio 2026", date: "04 a 16 de Maio de 2026", duration: "13 dias", partner: null, confirmed: true, img: "assets/images/pilgrimages/belgica-maio-2026.jpg", href: "belgica-maio-2026.html" },
+  { title: "Portugal, Espanha e França – Maio 2026", date: "10 a 25 de Maio de 2026", duration: "16 dias", partner: null, confirmed: true, img: "assets/images/pilgrimages/portugal-espanha-franca-maio-2026.jpg", href: "portugal-espanha-franca-maio-2026.html" },
+  { title: "México – Maio 2026", date: "12 a 20 de Maio de 2026", duration: "9 dias", partner: "Canção Nova", confirmed: true, img: "assets/images/pilgrimages/mexico-maio-2026.jpg", href: "mexico-maio-2026.html" },
+  { title: "Santuários Franceses – Junho 2026", date: "01 a 16 de Junho de 2026", duration: "16 dias", partner: "Canção Nova", confirmed: true, img: "assets/images/pilgrimages/franca-junho-2026.jpg", href: "franca-junho-2026.html" },
+  { title: "Itália – Junho 2026", date: "15 a 30 de Junho de 2026", duration: "16 dias", partner: null, confirmed: true, img: "assets/images/pilgrimages/italia-junho-2026.jpg", href: "italia-junho-2026.html" },
+  { title: "Terra Santa – Julho 2026", date: "07 a 16 de Julho de 2026", duration: "10 dias", partner: null, confirmed: true, img: "assets/images/pilgrimages/terra-santa-julho-2026.jpg", href: "terra-santa-julho-2026.html" },
+  { title: "Itália e França – Julho 2026", date: "18 a 31 de Julho de 2026", duration: "14 dias", partner: "Canção Nova", confirmed: true, img: "assets/images/pilgrimages/italia-franca-julho-2026.jpg", href: "italia-franca-julho-2026.html" },
+  { title: "Grécia e Turquia com Capadócia – Agosto 2026", date: "Agosto de 2026", duration: "A confirmar", partner: null, confirmed: true, img: "assets/images/pilgrimages/grecia-turquia-capadocia-agosto-2026.jpg", href: "grecia-turquia-julho-2026.html" },
+  { title: "Portugal e Itália – Agosto 2026", date: "03 a 17 de Agosto de 2026", duration: "15 dias", partner: "Canção Nova", confirmed: true, img: "assets/images/pilgrimages/portugal-italia-agosto-2026.jpg", href: "portugal-italia-agosto-2026.html" },
+  { title: "República Tcheca, Alemanha, Áustria, Eslováquia e Hungria – Agosto 2026", date: "Agosto de 2026", duration: "A confirmar", partner: null, confirmed: true, img: "assets/images/pilgrimages/republica-tcheca-agosto-2026.jpg", href: "republica-tcheca-agosto-2026.html" },
+];
+
+const CN_PILGRIMAGES = PILGRIMAGES.filter(p => p.partner === 'Canção Nova');
+
+// ── Render ───────────────────────────────────────────────
+function renderDashboard() {
+  const total = PILGRIMAGES.length;
+  const confirmed = PILGRIMAGES.filter(p => p.confirmed).length;
+  const cnCount = CN_PILGRIMAGES.length;
+  const withImg = PILGRIMAGES.filter(p => p.img).length;
+
+  const statsData = [
+    { icon: '✈', label: 'Total de Peregrinações', value: total, color: '#dbeafe', iconColor: '#1e40af' },
+    { icon: '✅', label: 'Confirmadas', value: confirmed, color: '#d1fae5', iconColor: '#065f46' },
+    { icon: '🕊', label: 'Canção Nova', value: cnCount, color: '#ede9fe', iconColor: '#5b21b6' },
+    { icon: '🖼', label: 'Com Imagem', value: withImg, color: '#fef9c3', iconColor: '#713f12' },
+  ];
+
+  document.getElementById('stats-grid').innerHTML = statsData.map(s => `
+    <div class="stat-card">
+      <div class="stat-icon" style="background:${s.color};color:${s.iconColor};">${s.icon}</div>
+      <div><h3>${s.value}</h3><p>${s.label}</p></div>
+    </div>
+  `).join('');
+
+  function buildRow(p, showPartner = true) {
+    const imgHtml = p.img
+      ? `<img src="${p.img}" class="cover-thumb" alt="">`
+      : `<div class="cover-placeholder">Sem img</div>`;
+    const statusBadge = p.confirmed
+      ? `<span class="badge badge-confirmed">&#10004; Confirmada</span>`
+      : `<span class="badge badge-awaiting">&#9679; Aguardando</span>`;
+    const partnerBadge = p.partner
+      ? `<span class="badge badge-cn">${p.partner}</span>`
+      : `<span style="color:#bbb;font-size:0.8rem;">—</span>`;
+
+    const partnerCell = showPartner ? `<td>${partnerBadge}</td>` : '';
+
+    return `<tr>
+      <td>${imgHtml}</td>
+      <td><strong>${p.title}</strong></td>
+      <td style="white-space:nowrap;">${p.date}</td>
+      <td>${p.duration}</td>
+      ${partnerCell}
+      <td>${statusBadge}</td>
+      <td><a href="${p.href}" class="btn-sm btn-primary-sm" target="_blank">Ver ↗</a></td>
+    </tr>`;
+  }
+
+  document.getElementById('pil-tbody').innerHTML = PILGRIMAGES.map(p => buildRow(p, true)).join('');
+  document.getElementById('cn-tbody').innerHTML = CN_PILGRIMAGES.map(p => buildRow(p, false)).join('');
+}
+</script>
+</body>
+</html>
