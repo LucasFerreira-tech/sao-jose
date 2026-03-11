@@ -1318,3 +1318,54 @@ footer {
 .cal-year-toggle.open svg { transform: rotate(180deg); }
 .cal-next-year { margin-top: 0; overflow: hidden; max-height: 0; transition: max-height 0.4s ease; }
 .cal-next-year.open { max-height: 9999px; }
+
+/* ── Extra status classes added for admin ──────────────── */
+.status-cancelled  { display:inline-block;color:#c0392b;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+.status-last-spots { display:inline-block;color:#e67e22;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+.status-sold-out   { display:inline-block;color:#888;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+.status-planning   { display:inline-block;color:#2980b9;font-weight:700;font-size:0.82rem;letter-spacing:0.5px; }
+
+/* ── Calendar Entry Cards ─────────────────────────────── */
+.cal-year-section { margin-bottom: 48px; }
+.cal-year-heading {
+  font-size: 1.6rem; font-weight: 700; color: var(--green-dark);
+  padding-bottom: 12px; border-bottom: 3px solid var(--gold);
+  margin-bottom: 32px; font-family: 'Cinzel', serif;
+}
+.cal-month-block { margin-bottom: 36px; }
+.cal-month-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px;
+}
+.cal-month-name {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.cal-entry {
+  display: flex; gap: 20px; align-items: flex-start;
+  background: var(--white); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 20px 24px;
+  margin-bottom: 14px; box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.cal-entry:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.cal-entry-date {
+  min-width: 60px; text-align: center; background: var(--green-dark);
+  color: var(--white); border-radius: 8px; padding: 10px 8px; flex-shrink: 0;
+}
+.cal-entry-date .cal-month { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+.cal-entry-date .cal-day { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+.cal-entry-date .cal-year { font-size: 0.68rem; opacity: 0.7; margin-top: 2px; }
+.cal-entry-body { flex: 1; min-width: 0; }
+.cal-entry-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.cal-entry-desc { font-size: 0.87rem; color: var(--text-mid); margin-bottom: 10px; line-height: 1.5; }
+.cal-entry-meta {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  font-size: 0.82rem; color: var(--text-mid);
+}
+.cal-entry-meta span { display: flex; align-items: center; gap: 4px; }
+@media (max-width: 600px) {
+  .cal-entry { flex-direction: column; gap: 14px; }
+  .cal-entry-date { display: flex; gap: 8px; align-items: center; min-width: auto; width: fit-content; border-radius: 6px; padding: 6px 12px; }
+  .cal-entry-date .cal-day { font-size: 1.1rem; }
+}
