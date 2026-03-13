@@ -332,8 +332,8 @@
           </select>
         </div>
         <div class="fg span2"><label>Link da página de detalhes</label><input id="f-href" placeholder="Deixe em branco para usar a página dinâmica (peregrinacao-detalhe.html?id=...)"></div>
-        <div class="fg span2"><label>Descrição curta * <span style="font-weight:400;color:var(--light)">(aparece nos cards e calendário)</span></label><textarea id="f-desc" rows="3" placeholder="Descreva brevemente o roteiro, destinos e diferenciais da peregrinação..."></textarea></div>
-        <div class="fg span2"><label>Roteiro completo <span style="font-weight:400;color:var(--light)">(aparece na página de detalhes)</span></label><textarea id="f-itinerary" rows="10" placeholder="Dia 1 – Chegada&#10;Descreva as atividades do primeiro dia...&#10;&#10;Dia 2 – [Título]&#10;Descreva as atividades...&#10;&#10;Use uma linha em branco para separar os dias."></textarea></div>
+        <div class="fg span2"><label>Descrição curta * <span style="font-weight:400;color:var(--light)">(cards e calendário)</span></label><textarea id="f-desc" rows="3" placeholder="Descrição breve que aparece nos cards e no calendário..."></textarea></div>
+        <div class="fg span2"><label>Roteiro completo <span style="font-weight:400;color:var(--light)">(página de detalhes)</span></label><textarea id="f-itinerary" rows="10" placeholder="Dia 1 – Chegada&#10;Descreva as atividades...&#10;&#10;Dia 2 – [Título]&#10;Descreva as atividades...&#10;&#10;Use uma linha em branco para separar os dias."></textarea></div>
 
         <!-- Image upload -->
         <div class="fg span2">
@@ -760,7 +760,7 @@ function savePilgrimage() {
     description:  document.getElementById('f-desc').value.trim(),
     itinerary:    document.getElementById('f-itinerary').value.trim(),
     img:          imgPath,
-    href:         document.getElementById('f-href').value.trim() || ('peregrinacao-detalhe.html?id=' + (id)),
+    href:         document.getElementById('f-href').value.trim() || ('peregrinacao-detalhe.html?id=' + id),
     category:     document.getElementById('f-category').value,
     status:       document.getElementById('f-status').value,
     cancaoNova:   document.getElementById('f-cancaonova').value === 'true',

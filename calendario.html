@@ -6,15 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendário 2026 – São José Peregrinações</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    /* ── Calendar image thumb — scoped to calendario.html only ── */
-    .cal-entry-img-wrap { flex-shrink: 0; }
-    .cal-entry-img { width: 120px; height: 90px; object-fit: cover; border-radius: 8px; display: block; }
-    @media (max-width: 600px) {
-      .cal-entry-img-wrap { width: 100%; }
-      .cal-entry-img { width: 100%; height: 180px; border-radius: 8px; }
-    }
-  </style>
+
 </head>
 <body>
 
@@ -82,93 +74,174 @@
 <script>
 // ═══════════════════════════════════════════════════════════════════
 //  DYNAMIC CALENDAR — driven by js/data.js
+//  Uses native CSS classes: .cal-entry, .cal-entry-body, .cal-entry-date
+//  Shows cover image when available, green date-box as fallback
 // ═══════════════════════════════════════════════════════════════════
-const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const MONTH_SHORT_PT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+  'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MONTH_SHORT_PT = ['Jan','Fev','Mar','Abr','Mai','Jun',
+  'Jul','Ago','Set','Out','Nov','Dez'];
 
-// Build pilgrimages in the calendar format from data.js
-const CALENDAR_PILGRIMAGES = SJ_DATA.pilgrimages.map(p => ({
-  title: p.title,
-  desc: p.description,
-  dateStart: SJ_DATA.getDate(p),
-  img: p.img,
-  href: p.href,
-  partner: p.cancaoNova ? 'Canção Nova' : null,
-  confirmed: p.status === 'confirmado',
-  duration: p.duration,
-  priceLabel: p.price,
-  status: p.status
-})).filter(p => p.dateStart);
+const CALENDAR_PILGRIMAGES = SJ_DATA.pilgrimages
+  .filter(function(p){ return SJ_DATA.getDate(p); })
+  .map(function(p){
+    return {
+      title:      p.title,
+      desc:       p.description,
+      dateStart:  SJ_DATA.getDate(p),
+      img:        p.img || null,
+      href:       p.href,
+      partner:    p.cancaoNova ? 'Canção Nova' : null,
+      confirmed:  p.status === 'confirmado',
+      duration:   p.duration,
+      priceLabel: p.price || null,
+      status:     p.status
+    };
+  });
 
 function buildCalEntry(p) {
-  const statusHtml = p.confirmed
-    ? `<span class="status-confirmed">&#10004; Confirmada</span>`
-    : `<span class="status-awaiting">&#9679; Aguardando grupo</span>`;
-  const partnerBadge = p.partner
-    ? `<span style="display:inline-block;background:#edf4ff;color:#1a3a6b;border:1px solid #c0d4f0;border-radius:20px;padding:2px 10px;font-size:0.78rem;font-weight:600;margin-left:8px;">${p.partner}</span>` : '';
-  const priceHtml = p.priceLabel
-    ? `<div style="font-size:0.85rem;color:var(--green-dark);font-weight:700;margin-top:6px;">A partir de ${p.priceLabel}</div>` : '';
-  const fallbackDiv = `<div style="width:120px;height:90px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--green-mid),var(--green-light));display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:1.8rem;">&#9764;</div>`;
-  const imgHtml = p.img
-    ? `<img src="${p.img}" alt="${p.title}" class="cal-entry-img">`
-    : fallbackDiv;
-  return `
-    <div class="cal-entry fade-up">
-      <div class="cal-entry-img-wrap">${imgHtml}</div>
-      <div class="cal-entry-body">
-        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
-          ${statusHtml}${partnerBadge}
-        </div>
-        <h3 class="cal-entry-title">${p.title}</h3>
-        <p class="cal-entry-desc">${p.desc}</p>
-        ${priceHtml}
-        <div class="cal-entry-meta">
-          <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${p.duration}</span>
-          <a href="${p.href}" class="btn btn-green" style="padding:8px 20px;font-size:0.85rem;">Ver Detalhes</a>
-        </div>
-      </div>
-    </div>`;
+  var statusHtml = p.confirmed
+    ? '<span class="status-confirmed">&#10004; Confirmada</span>'
+    : '<span class="status-awaiting">&#9679; Aguardando grupo</span>';
+
+  var partnerBadge = p.partner
+    ? '<span style="background:#1a3a6b;color:#e2c06a;font-size:0.7rem;font-weight:700;'
+    + 'letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:50px;'
+    + 'margin-left:6px;">' + p.partner + '</span>'
+    : '';
+
+  var priceHtml = p.priceLabel
+    ? '<div style="font-size:0.85rem;color:var(--green-dark);font-weight:700;margin-top:6px;">'
+    + 'A partir de ' + p.priceLabel + '</div>'
+    : '';
+
+  // LEFT COLUMN: photo if available, green date-box as fallback
+  var leftCol;
+  if (p.img) {
+    leftCol = '<img src="' + p.img + '" alt="' + p.title + '" '
+            + 'style="width:120px;height:90px;object-fit:cover;object-position:center;'
+            + 'border-radius:8px;flex-shrink:0;display:block;">';
+  } else {
+    var mon = p.dateStart ? MONTH_SHORT_PT[p.dateStart.getMonth()] : '—';
+    var day = p.dateStart ? p.dateStart.getDate() : '—';
+    leftCol = '<div class="cal-entry-date" style="flex-shrink:0;">'
+            +   '<div class="cal-month">' + mon + '</div>'
+            +   '<div class="cal-day">'   + day + '</div>'
+            + '</div>';
+  }
+
+  return '<div class="cal-entry fade-up">'
+       +   leftCol
+       +   '<div class="cal-entry-body">'
+       +     '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px;">'
+       +       statusHtml + partnerBadge
+       +     '</div>'
+       +     '<h3 class="cal-entry-title">' + p.title + '</h3>'
+       +     '<p class="cal-entry-desc">'   + p.desc  + '</p>'
+       +     priceHtml
+       +     '<div class="cal-entry-meta">'
+       +       '<span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" '
+       +       'stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">'
+       +       '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> '
+       +       p.duration + '</span>'
+       +       '<a href="' + p.href + '" class="btn btn-green" '
+       +       'style="padding:8px 20px;font-size:0.85rem;">Ver Detalhes</a>'
+       +     '</div>'
+       +   '</div>'
+       + '</div>';
 }
 
 function buildMonthBlock(monthIdx, year, entries) {
-  return `
-    <div class="cal-month-block fade-up">
-      <div class="cal-month-header">
-        <span class="cal-month-name">${MONTH_NAMES_PT[monthIdx]} ${year}</span>
-      </div>
-      ${entries.map(buildCalEntry).join('')}
-    </div>`;
+  return '<div class="cal-month-block fade-up">'
+       + '<div class="cal-month-header">'
+       +   '<span class="cal-month-name">' + MONTH_NAMES_PT[monthIdx] + ' ' + year + '</span>'
+       + '</div>'
+       + entries.map(buildCalEntry).join('')
+       + '</div>';
 }
 
 function buildYearSection(year, pilgrimages) {
-  const byMonth = {};
-  pilgrimages.forEach(p => {
-    const m = p.dateStart.getMonth();
+  var byMonth = {};
+  pilgrimages.forEach(function(p){
+    var m = p.dateStart.getMonth();
     if (!byMonth[m]) byMonth[m] = [];
     byMonth[m].push(p);
   });
-  const monthBlocks = Object.keys(byMonth).sort((a,b)=>a-b)
-    .map(m => buildMonthBlock(parseInt(m), year, byMonth[m])).join('');
-  return `
-    <div class="cal-year-section">
-      <h2 class="cal-year-heading">${year}</h2>
-      ${monthBlocks}
-    </div>`;
+  var monthBlocks = Object.keys(byMonth).sort(function(a,b){ return a-b; })
+    .map(function(m){ return buildMonthBlock(parseInt(m), year, byMonth[m]); }).join('');
+  return '<div class="cal-year-section">'
+       + '<h2 class="cal-year-heading">' + year + '</h2>'
+       + monthBlocks
+       + '</div>';
 }
 
 (function renderCalendar() {
-  const sorted = [...CALENDAR_PILGRIMAGES].sort((a,b) => a.dateStart - b.dateStart);
-  // Group by year
-  const byYear = {};
-  sorted.forEach(p => {
-    const y = p.dateStart.getFullYear();
+  var now     = new Date();
+  var todayMs = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+
+  // Only show pilgrimages from today forward
+  var sorted = CALENDAR_PILGRIMAGES
+    .filter(function(p){ return p.dateStart && p.dateStart.getTime() >= todayMs; })
+    .sort(function(a,b){ return a.dateStart - b.dateStart; });
+
+  var byYear = {};
+  sorted.forEach(function(p){
+    var y = p.dateStart.getFullYear();
     if (!byYear[y]) byYear[y] = [];
     byYear[y].push(p);
   });
 
-  const container = document.getElementById('cal-current-year');
+  var container = document.getElementById('cal-current-year');
   if (!container) return;
-  container.innerHTML = Object.keys(byYear).sort().map(y => buildYearSection(parseInt(y), byYear[y])).join('');
+
+  var years = Object.keys(byYear).sort();
+  if (!years.length) {
+    container.innerHTML = '<p style="color:var(--text-mid);text-align:center;padding:40px 0;">'
+      + 'Nenhuma peregrinação confirmada para os próximos meses.</p>';
+    return;
+  }
+
+  // First year renders normally
+  var firstYear = parseInt(years[0]);
+  container.innerHTML = buildYearSection(firstYear, byYear[firstYear]);
+
+  // Remaining years go in the collapsible next-year wrapper
+  var wrapper = document.getElementById('cal-next-year-wrapper');
+  if (!wrapper) return;
+  var remaining = years.slice(1);
+  if (!remaining.length) return;
+
+  var chevron = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" '
+    + 'stroke="currentColor" stroke-width="2" width="22" height="22">'
+    + '<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
+
+  var innerHTML = '';
+  remaining.forEach(function(y){
+    innerHTML += buildYearSection(parseInt(y), byYear[y]);
+  });
+
+  var nextLabel = remaining.length === 1 ? remaining[0] : remaining[0] + ' – ' + remaining[remaining.length-1];
+
+  wrapper.innerHTML =
+      '<div class="cal-year-toggle fade-up" id="cal-next-toggle" '
+    +   'role="button" tabindex="0" aria-expanded="false">'
+    +   '<h2 style="margin:0;font-size:1.3rem;color:var(--green-dark);">' + nextLabel + '</h2>'
+    +   chevron
+    + '</div>'
+    + '<div class="cal-next-year" id="cal-next-body" style="padding:0 4px;">'
+    +   '<div style="padding-top:32px;">' + innerHTML + '</div>'
+    + '</div>';
+
+  var toggle = document.getElementById('cal-next-toggle');
+  var body   = document.getElementById('cal-next-body');
+  toggle.addEventListener('click', function(){
+    var open = body.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+  });
+  toggle.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle.click(); }
+  });
 })();
 </script>
 <footer>
