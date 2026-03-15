@@ -1005,7 +1005,7 @@ SJ_DATA.buildCard = function(p) {
        +       statusHTML
        +     '</div>'
        +     '<h3>' + p.title + '</h3>'
-       +     '<p>' + p.description + '</p>'
+       +     '<p>' + (p.description || '').replace(/\s*Parceria especial com a Canção Nova\.?/gi, '').replace(/\s*com o diferencial espiritual da Canção Nova\.?/gi, '').trim() + '</p>'
        +     '<div class="card-meta">'
        +       '<span>' + calSVG + ' ' + p.dateLabel + '</span>'
        +       '<span>' + clkSVG + ' ' + p.duration + '</span>'
