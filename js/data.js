@@ -312,26 +312,6 @@ const SJ_DATA = {
     "status": "confirmado",
     "cancaoNova": false,
     "directors": []
-  },
-  {
-    "id": "teste-de-adicional-peregrinacao-1773268498007",
-    "title": "TESTE DE ADICIONAL PEREGRINAÇÃO",
-    "destination": "Israel . Palestina",
-    "month": 1,
-    "year": 2026,
-    "dayStart": 6,
-    "dateLabel": "06 a 16 de julho de 2026",
-    "duration": "10 dias",
-    "price": "R$ 29000",
-    "entryPayment": "R$ 2600",
-    "installments": 10,
-    "description": "",
-    "img": null,
-    "href": "teste-adicional-peregrinacao-janeiro-2016.html",
-    "category": "saojose",
-    "status": "confirmado",
-    "cancaoNova": false,
-    "directors": []
   }
 ],
   gallery: [],
