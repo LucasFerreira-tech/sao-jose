@@ -22,7 +22,7 @@ const SJ_DATA = {
     "img": "assets/images/pilgrimages/aparecida-marco-2026.jpg",
     "href": "aparecida-marco-2026.html",
     "category": "saojose",
-    "status": "confirmado",
+    "status": "realizado",
     "cancaoNova": false,
     "directors": []
   },
@@ -42,7 +42,7 @@ const SJ_DATA = {
     "img": "assets/images/pilgrimages/italia-abril-2026.jpg",
     "href": "italia-abril-2026.html",
     "category": "cancaonova",
-    "status": "confirmado",
+    "status": "realizado",
     "cancaoNova": true,
     "directors": [
       {
@@ -73,7 +73,7 @@ const SJ_DATA = {
     "img": "assets/images/pilgrimages/belgica-maio-2026.jpg",
     "href": "belgica-maio-2026.html",
     "category": "saojose",
-    "status": "confirmado",
+    "status": "realizado",
     "cancaoNova": false,
     "directors": []
   },
@@ -119,7 +119,7 @@ const SJ_DATA = {
     "img": "assets/images/pilgrimages/mexico-maio-2026.jpg",
     "href": "mexico-maio-2026.html",
     "category": "cancaonova",
-    "status": "confirmado",
+    "status": "realizado",
     "cancaoNova": true,
     "directors": [
       {
@@ -295,12 +295,12 @@ const SJ_DATA = {
   },
   {
     "id": "grecia-turquia-agosto-2026",
-    "title": "Grécia e Turquia com Capadócia e Ilhas Gregas – Agosto 2026",
+    "title": "Grécia e Turquia com Capadócia e Ilhas Gregas – Julho/Agosto 2026",
     "destination": "Grécia · Turquia · Capadócia",
-    "month": 8,
+    "month": 7,
     "year": 2026,
-    "dayStart": 15,
-    "dateLabel": "Agosto de 2026",
+    "dayStart": 5,
+    "dateLabel": "Julho/Agosto de 2026",
     "duration": "A confirmar",
     "price": null,
     "entryPayment": null,
@@ -343,7 +343,7 @@ SJ_DATA.getDate = function(p) {
 };
 
 SJ_DATA.isVisible = function(p) {
-  return p.status !== 'cancelado' && p.status !== 'esgotada';
+  return p.status !== 'cancelado' && p.status !== 'esgotada' && p.status !== 'realizado';
 };
 
 SJ_DATA.getSuggested = function(p) {
