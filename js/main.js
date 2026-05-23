@@ -6,7 +6,7 @@
 // ── WhatsApp Configuration ──────────────────────────────
 // SUBSTITUIR pelo número real com código do país
 // Exemplo: '5567999998888' para Campo Grande MS
-const WHATSAPP_NUMBER = 'INSERIR_NUMERO_AQUI'; // ex: '5567999998888'
+const WHATSAPP_NUMBER = '5567932117001'; // ex: '5567999998888'
 const WHATSAPP_DEFAULT_MSG = encodeURIComponent(
   'Olá! Gostaria de mais informações sobre as peregrinações da Loja São José.'
 );
