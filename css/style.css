@@ -1374,6 +1374,14 @@ footer {
 .card-media-wrap {
   position: relative;
   overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--cream);
+}
+.card-media-wrap > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
 }
 
 /* CANCELADA — glass overlay + red stamp */

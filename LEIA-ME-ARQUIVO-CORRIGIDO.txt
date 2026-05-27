@@ -1,0 +1,12 @@
+ARQUIVO CORRIGIDO E PRONTO PARA UPLOAD
+
+Esta e a copia limpa do site corrigido, sem a pasta oculta .git.
+
+Use esta pasta para subir manualmente no GitHub:
+/home/lucas/Downloads/sao-jose-roteiros-2026-atualizado (1)/sao-jose-site-corrigido-para-upload
+
+Repositorio indicado:
+https://github.com/LucasFerreira-tech/sao-jose
+
+Arquivo inicial do site:
+index.html
