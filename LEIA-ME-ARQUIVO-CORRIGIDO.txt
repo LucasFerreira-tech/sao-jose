@@ -1,0 +1,15 @@
+ARQUIVO CORRIGIDO E PRONTO PARA PUBLICAR
+
+Esta pasta e uma copia do site corrigido por Codex.
+
+Pasta original editada:
+/home/lucas/Downloads/sao-jose-roteiros-2026-atualizado (1)/sao-jose-updated
+
+Pasta copia para subir no GitHub:
+/home/lucas/Downloads/sao-jose-roteiros-2026-atualizado (1)/sao-jose-site-corrigido-pronto-github
+
+Para publicar manualmente, envie o conteudo desta pasta para o repositorio:
+https://github.com/LucasFerreira-tech/sao-jose
+
+Arquivo inicial do site:
+index.html
