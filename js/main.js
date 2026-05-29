@@ -4,9 +4,8 @@
    ============================================================ */
 
 // ── WhatsApp Configuration ──────────────────────────────
-// SUBSTITUIR pelo número real com código do país
-// Exemplo: '5567999998888' para Campo Grande MS
-const WHATSAPP_NUMBER = 'INSERIR_NUMERO_AQUI'; // ex: '5567999998888'
+const WHATSAPP_NUMBER = '5567932117001'; // ex: '5567999998888'
+window.SJ_WHATSAPP_NUMBER = WHATSAPP_NUMBER;
 const WHATSAPP_DEFAULT_MSG = encodeURIComponent(
   'Olá! Gostaria de mais informações sobre as peregrinações da Loja São José.'
 );
@@ -66,18 +65,27 @@ if (navToggle && navMobile) {
 })();
 
 // ── Scroll-triggered fade-up animations ────────────────
-const observer = new IntersectionObserver(
-  entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  },
-  { threshold: 0.12 }
-);
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+window.initFadeUp = function initFadeUp() {
+  const fadeItems = document.querySelectorAll('.fade-up:not(.visible)');
+  if (!('IntersectionObserver' in window)) {
+    fadeItems.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  fadeItems.forEach(el => observer.observe(el));
+};
+window.initFadeUp();
 
 // ── Animate stat counters ───────────────────────────────
 function animateCounter(el) {
@@ -96,18 +104,22 @@ function animateCounter(el) {
   }, 16);
 }
 
-const counterObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCounter(e.target);
-        counterObserver.unobserve(e.target);
-      }
-    });
-  },
-  { threshold: 0.5 }
-);
-document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+if ('IntersectionObserver' in window) {
+  const counterObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          animateCounter(e.target);
+          counterObserver.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+  document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+} else {
+  document.querySelectorAll('[data-count]').forEach(animateCounter);
+}
 
 // ── Contact form handler ────────────────────────────────
 const contactForm = document.getElementById('contactForm');
@@ -124,7 +136,9 @@ if (contactForm) {
 // ── Smooth scroll for anchor links ─────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
+    const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
       const offset = 88;
