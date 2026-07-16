@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Galeria – São José Peregrinações</title>
   <link rel="stylesheet" href="css/style.css">
+  <meta property="og:title" content="Galeria de Fotos – São José Peregrinações">
+  <meta property="og:description" content="Momentos de fé e espiritualidade nas nossas peregrinações. Fotos de grupos, santuários e experiências inesquecíveis.">
+  <meta property="og:image" content="assets/images/logo.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="description" content="Momentos de fé e espiritualidade nas nossas peregrinações. Fotos de grupos, santuários e experiências inesquecíveis.">
   <style>
     .gallery-full-grid {
       display: grid;
@@ -22,6 +28,62 @@
       .gallery-full-grid { grid-template-columns: 1fr; }
       .gallery-full-grid .gallery-item.wide { grid-column: span 1; }
     }
+    .gallery-item button {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: zoom-in;
+      display: block;
+    }
+    .gallery-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.86);
+      padding: 24px;
+    }
+    .gallery-lightbox.open { display: flex; }
+    .gallery-lightbox img {
+      max-width: min(100%, 1100px);
+      max-height: 86vh;
+      border-radius: var(--radius);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+      object-fit: contain;
+    }
+    .gallery-lightbox button {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .gallery-photos-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      color: var(--green-dark);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      margin-top: 14px;
+    }
+    .gallery-photos-notice svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -66,11 +128,12 @@
 <section class="section">
   <div class="container">
 
-    <!-- CAMINHO DE SANTIAGO -->
+    <!-- LOURDES -->
     <div style="margin-bottom:56px;">
       <div class="fade-up" style="margin-bottom:24px;">
-        <h2>Caminho de Santiago</h2>
+        <h2>Lourdes</h2>
         <div class="gold-bar" style="margin:12px 0 0;"></div>
+        <div class="gallery-photos-notice"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.822 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/></svg> Fotos em breve</div>
       </div>
       <div class="gallery-full-grid fade-up">
         <div class="gallery-item wide">
@@ -101,11 +164,12 @@
       </div>
     </div>
 
-    <!-- TERRA SANTA -->
+    <!-- SANTUARIO DE LA SALETTE -->
     <div style="margin-bottom:56px;">
       <div class="fade-up" style="margin-bottom:24px;">
-        <h2>Terra Santa</h2>
+        <h2>Santuário de La Salette</h2>
         <div class="gold-bar" style="margin:12px 0 0;"></div>
+        <div class="gallery-photos-notice"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.822 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/></svg> Fotos em breve</div>
       </div>
       <div class="gallery-full-grid fade-up">
         <div class="gallery-item">
@@ -136,6 +200,7 @@
       <div class="fade-up" style="margin-bottom:24px;">
         <h2>Fátima e Portugal</h2>
         <div class="gold-bar" style="margin:12px 0 0;"></div>
+        <div class="gallery-photos-notice"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.822 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/></svg> Fotos em breve</div>
       </div>
       <div class="gallery-full-grid fade-up">
         <div class="gallery-item wide">
@@ -162,6 +227,7 @@
       <div class="fade-up" style="margin-bottom:24px;">
         <h2>Roma, Lourdes e Outros Destinos</h2>
         <div class="gold-bar" style="margin:12px 0 0;"></div>
+        <div class="gallery-photos-notice"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.822 1.316z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/></svg> Fotos em breve</div>
       </div>
       <div class="gallery-full-grid fade-up">
         <div class="gallery-item">
@@ -214,14 +280,14 @@
         <li><a href="peregrinacoes.html">Lourdes</a></li><li><a href="peregrinacoes.html">Medjugorje</a></li>
       </ul></div>
       <div class="footer-col"><h5>Contato</h5>
-        <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Campo Grande, MS, Brasil</span></div>
+        <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>R. Dom Aquino, 1937 – Centro, Campo Grande – MS</span></div>
         <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326z"/></svg>
           <a href="#" data-whatsapp style="color:rgba(255,255,255,0.7)">Falar pelo WhatsApp</a></div>
       </div>
     </div>
     
     <div class="footer-dev">
-      <a href="https://wa.me/XXXXXXXXXXX" target="_blank" rel="noopener" aria-label="Desenvolvido por Lucas – Falar no WhatsApp">
+      <a href="https://wa.me/5567932117001" target="_blank" rel="noopener" aria-label="Desenvolvido por Lucas – Falar no WhatsApp">
         <img src="assets/images/dev-lucas-logo.png" alt="Lucas – Desenvolvedor Web">
         <span>Desenvolvido por Lucas</span>
       </a>
@@ -233,6 +299,42 @@
 <a href="#" class="whatsapp-float" data-whatsapp aria-label="Falar no WhatsApp">
   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
 </a>
+<div class="gallery-lightbox" id="gallery-lightbox" aria-hidden="true">
+  <button type="button" aria-label="Fechar galeria" id="gallery-lightbox-close">&times;</button>
+  <img src="" alt="" id="gallery-lightbox-img">
+</div>
+<script>
+(function renderGalleryImages() {
+  var groups = [[], [], [], []];
+  var grids = document.querySelectorAll('.gallery-full-grid');
+  grids.forEach(function(grid, index) {
+    var items = groups[index] || groups[0];
+    grid.innerHTML = items.map(function(item, i) {
+      var wide = i === 0 || (items.length > 5 && i === items.length - 1) ? ' wide' : '';
+      return '<div class="gallery-item' + wide + '"><button type="button" data-gallery-src="' + item[0] + '" data-gallery-alt="' + item[1] + '"><img src="' + item[0] + '" alt="' + item[1] + '"><div class="gallery-overlay"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div></button></div>';
+    }).join('');
+  });
+  var lightbox = document.getElementById('gallery-lightbox');
+  var img = document.getElementById('gallery-lightbox-img');
+  var close = document.getElementById('gallery-lightbox-close');
+  document.querySelectorAll('[data-gallery-src]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      img.src = btn.getAttribute('data-gallery-src');
+      img.alt = btn.getAttribute('data-gallery-alt') || '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    });
+  });
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    img.src = '';
+  }
+  close.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+})();
+</script>
 <script src="js/main.js"></script>
 </body>
 </html>

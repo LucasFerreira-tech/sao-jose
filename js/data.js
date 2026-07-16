@@ -1,321 +1,499 @@
 /* ============================================================
    SÃO JOSÉ – DADOS CENTRALIZADOS
    js/data.js — Fonte única de verdade para todo o conteúdo
-   Gerado pelo Admin em: 11/03/2026, 19:35:25
+   Gerado pelo Admin em: 29/05/2026, 18:25:31
    ============================================================ */
 
 const SJ_DATA = {
   pilgrimages: [
   {
-    "id": "aparecida-marco-2026",
-    "title": "Excursão a Aparecida – Março 2026",
-    "destination": "Brasil – Aparecida do Norte",
-    "month": 3,
-    "year": 2026,
-    "dayStart": 27,
-    "dateLabel": "27 a 30 de Março de 2026",
-    "duration": "4 dias",
-    "price": "R$ 2.290,00",
-    "entryPayment": "R$ 500,00",
-    "installments": 6,
-    "description": "Um fim de semana abençoado em Aparecida do Norte, lar de Nossa Senhora Aparecida, Padroeira do Brasil. Saída de Campo Grande – MS.",
-    "img": "assets/images/pilgrimages/aparecida-marco-2026.jpg",
-    "href": "aparecida-marco-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
-    "cancaoNova": false,
-    "directors": []
-  },
-  {
-    "id": "italia-abril-2026",
-    "title": "Itália – Abril 2026",
-    "destination": "Itália",
-    "month": 4,
-    "year": 2026,
-    "dayStart": 7,
-    "dateLabel": "07 a 18 de Abril de 2026",
-    "duration": "12 dias",
-    "price": null,
-    "entryPayment": null,
-    "installments": null,
-    "description": "Veneza, Pádua, Florença, Assis, Cássia, Loreto, Lanciano, Monte Gargano, San Giovanni Rotondo e Roma.",
-    "img": "assets/images/pilgrimages/italia-abril-2026.jpg",
-    "href": "italia-abril-2026.html",
-    "category": "cancaonova",
-    "status": "confirmado",
-    "cancaoNova": true,
-    "directors": [
-      {
-        "name": "Padre Renné Viana",
-        "role": "Diretor Espiritual",
-        "photo": "assets/images/padre-renne-viana.png"
-      },
-      {
-        "name": "Pitter Di Laura",
-        "role": "Missionário",
-        "photo": "assets/images/pitter-di-laura.jpg"
-      }
-    ]
-  },
-  {
-    "id": "belgica-maio-2026",
-    "title": "Bélgica, Holanda e Alemanha – Maio 2026",
-    "destination": "Bélgica · Holanda · Alemanha",
-    "month": 5,
-    "year": 2026,
-    "dayStart": 4,
-    "dateLabel": "04 a 16 de Maio de 2026",
+    "id": "peregrinacao-1",
+    "title": "TERRA SANTA E JORDANIA - FEVEREIRO 2027",
+    "destination": "TERRA SANTA E JORDANIA",
+    "month": 2,
+    "year": 2027,
+    "dayStart": 11,
+    "dateLabel": "De 11/02/2027 até 23/02/2027",
     "duration": "13 dias",
     "price": "R$ 28.980,00",
-    "entryPayment": "R$ 5.000,00",
-    "installments": 10,
-    "description": "Bruxelas, Bruges, Amsterdam, Keukenhof, Colônia, Santuário de Schoenstatt e Frankfurt. Embarque em qualquer capital do Brasil.",
-    "img": "assets/images/pilgrimages/belgica-maio-2026.jpg",
-    "href": "belgica-maio-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
+    "entryPayment": "Entrada de R$2.600,00 + 14 parcelas SEM JUROS de R$1.884,28 (boleto + cartão de crédito)",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-1.jpg",
+    "href": "peregrinacao-1.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Leandro",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-2",
+    "title": "Bélgica, Holanda e Alemanha - Abril 2027",
+    "destination": "Bélgica, Holanda e Alemanha",
+    "month": 4,
+    "year": 2027,
+    "dayStart": 1,
+    "dateLabel": "De 01/04/2027 até 13/04/2027",
+    "duration": "13 dias",
+    "price": "R$ 29.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 16 parcelas de R$1.711,25 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-2.jpg",
+    "href": "peregrinacao-2.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
     "cancaoNova": false,
     "directors": []
   },
   {
-    "id": "portugal-espanha-franca-maio-2026",
-    "title": "Portugal, Espanha e França – Maio 2026",
-    "destination": "Portugal · Espanha · França",
+    "id": "peregrinacao-3",
+    "title": "Inglaterra, Gales, Escócia e Irlanda - Maio 2027",
+    "destination": "Inglaterra, Gales, Escócia e Irlanda",
     "month": 5,
-    "year": 2026,
-    "dayStart": 10,
-    "dateLabel": "10 a 25 de Maio de 2026",
-    "duration": "16 dias",
-    "price": "R$ 28.980,00",
-    "entryPayment": "R$ 5.000,00",
-    "installments": 10,
-    "description": "Lisboa, Óbidos, Nazaré, Fátima, Madrid, Lourdes, Ars, Paray-le-Monial, Nevers, Paris e Lisieux. 13 de Maio em Fátima. Com Padre Linniker.",
-    "img": "assets/images/pilgrimages/portugal-espanha-franca-maio-2026.jpg",
-    "href": "portugal-espanha-franca-maio-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
+    "year": 2027,
+    "dayStart": 14,
+    "dateLabel": "De 14/05/2027 até 28/05/2027",
+    "duration": "15 dias",
+    "price": "R$ 34.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 17 parcelas de R$1.904,70 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-3.jpg",
+    "href": "peregrinacao-3.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
     "cancaoNova": false,
-    "directors": [
-      {
-        "name": "Padre Linniker",
-        "role": "Diretor Espiritual",
-        "photo": "assets/images/padre-linniker.png"
-      }
-    ]
+    "directors": []
   },
   {
-    "id": "mexico-maio-2026",
-    "title": "México – Maio 2026",
-    "destination": "México",
-    "month": 5,
-    "year": 2026,
-    "dayStart": 12,
-    "dateLabel": "12 a 20 de Maio de 2026",
-    "duration": "9 dias",
-    "price": "R$ 18.980,00",
-    "entryPayment": "R$ 3.000,00",
-    "installments": 8,
-    "description": "Basílica de Nossa Senhora de Guadalupe, Tulpetlac, Cuautitlán, Pirâmides de Teotihuacán, Puebla e Cholula. Com Padre Jesú e Sônia Venâncio.",
-    "img": "assets/images/pilgrimages/mexico-maio-2026.jpg",
-    "href": "mexico-maio-2026.html",
-    "category": "cancaonova",
-    "status": "confirmado",
-    "cancaoNova": true,
-    "directors": [
-      {
-        "name": "Padre Jesú",
-        "role": "Diretor Espiritual",
-        "photo": "assets/images/padre-jesu.png"
-      },
-      {
-        "name": "Sônia Venâncio",
-        "role": "Missionária",
-        "photo": "assets/images/sonia-venancio.png"
-      }
-    ]
-  },
-  {
-    "id": "franca-junho-2026",
-    "title": "Santuários Franceses – Junho 2026",
-    "destination": "França",
-    "month": 6,
+    "id": "peregrinacao-4",
+    "title": "Itália e Medjugorje - Setembro 2026",
+    "destination": "Itália e Medjugorje",
+    "month": 9,
     "year": 2026,
     "dayStart": 1,
-    "dateLabel": "01 a 16 de Junho de 2026",
-    "duration": "16 dias",
-    "price": "R$ 26.980,00",
-    "entryPayment": "R$ 5.000,00",
-    "installments": 10,
-    "description": "Paris, Lisieux, Monte São Michel, Lourdes, La Salette, Paray-le-Monial e Nevers. Com Padre Alessandro e Salette Ferreira.",
-    "img": "assets/images/pilgrimages/franca-junho-2026.jpg",
-    "href": "franca-junho-2026.html",
-    "category": "cancaonova",
-    "status": "confirmado",
-    "cancaoNova": true,
-    "directors": [
-      {
-        "name": "Padre Alessandro",
-        "role": "Diretor Espiritual",
-        "photo": "assets/images/padre-alessandro.jpg"
-      },
-      {
-        "name": "Salette Ferreira",
-        "role": "Missionária",
-        "photo": "assets/images/salette-ferreira.jpg"
-      }
-    ]
-  },
-  {
-    "id": "italia-junho-2026",
-    "title": "Itália – Junho 2026",
-    "destination": "Itália",
-    "month": 6,
-    "year": 2026,
-    "dayStart": 15,
-    "dateLabel": "15 a 30 de Junho de 2026",
-    "duration": "16 dias",
+    "dateLabel": "De 01/09/2026 até 15/09/2026",
+    "duration": "15 dias",
     "price": "R$ 27.980,00",
-    "entryPayment": "R$ 5.000,00",
-    "installments": 10,
-    "description": "Milão, Turim, Veneza, Pádua, Florença, Siena, Assis, Cássia, Lanciano, San Giovanni Rotondo, Monte Sant'Angelo e Roma. Com Padre Márcio Reis.",
-    "img": "assets/images/pilgrimages/italia-junho-2026.jpg",
-    "href": "italia-junho-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
+    "entryPayment": "Entrada de R$2.600,00 + 11 parcelas de R$2.307,27 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-4.jpg",
+    "href": "peregrinacao-4.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
     "cancaoNova": false,
     "directors": [
       {
-        "name": "Padre Márcio Reis",
-        "role": "Diretor Espiritual",
-        "photo": "assets/images/padre-marcio-reis.jpg"
+        "name": "Padre Fernando Lorenz",
+        "role": "Diretor Espiritual"
       }
     ]
   },
   {
-    "id": "terra-santa-julho-2026",
-    "title": "Terra Santa – Julho 2026",
-    "destination": "Israel · Palestina",
-    "month": 7,
-    "year": 2026,
-    "dayStart": 7,
-    "dateLabel": "07 a 16 de Julho de 2026",
-    "duration": "10 dias",
-    "price": "R$ 23.980,00",
-    "entryPayment": "R$ 4.000,00",
-    "installments": 8,
-    "description": "Jerusalém, Belém, Betânia, Cafarnaum, Jericó, Rio Jordão e Mar Morto. Uma peregrinação pelos lugares sagrados onde Jesus viveu e pregou.",
-    "img": "assets/images/pilgrimages/terra-santa-julho-2026.jpg",
-    "href": "terra-santa-julho-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
+    "id": "peregrinacao-5",
+    "title": "Itália (Costa Amalfitana) e Suíça - Abril 2027",
+    "destination": "Itália (Costa Amalfitana) e Suíça",
+    "month": 4,
+    "year": 2027,
+    "dayStart": 15,
+    "dateLabel": "De 15/04/2027 até 29/04/2027",
+    "duration": "15 dias",
+    "price": "R$ 33.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 16 parcelas de R$1.961,25 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-5.jpg",
+    "href": "peregrinacao-5.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
     "cancaoNova": false,
     "directors": []
   },
   {
-    "id": "italia-franca-julho-2026",
-    "title": "Itália e França – Julho 2026",
-    "destination": "Itália · França",
-    "month": 7,
+    "id": "peregrinacao-6",
+    "title": "Excursão Aparecida do Norte - Outubro 2026",
+    "destination": "Excursão Aparecida do Norte",
+    "month": 10,
     "year": 2026,
-    "dayStart": 18,
-    "dateLabel": "18 a 31 de Julho de 2026",
+    "dayStart": 16,
+    "dateLabel": "De 16/10/2026 até 19/10/2026",
+    "duration": "4 dias",
+    "price": "R$ 2.490,00",
+    "entryPayment": "Entrada de R$200,00 + 10 parcelas de R$229,00 no cartão de crédito (sem juros)",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-6.jpg",
+    "href": "peregrinacao-6.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": []
+  },
+  {
+    "id": "peregrinacao-7",
+    "title": "Grécia e Turquia com Capadócia e Ilhas Gregas - Agosto 2026",
+    "destination": "Grécia e Turquia com Capadócia e Ilhas Gregas",
+    "month": 8,
+    "year": 2026,
+    "dayStart": 16,
+    "dateLabel": "De 16/08/2026 até 31/08/2026",
+    "duration": "16 dias",
+    "price": "R$ 29.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 10 parcelas de R$2.738,00 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-7.jpg",
+    "href": "peregrinacao-7.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": []
+  },
+  {
+    "id": "peregrinacao-8",
+    "title": "Portugal - Outubro 2026",
+    "destination": "Portugal",
+    "month": 10,
+    "year": 2026,
+    "dayStart": 9,
+    "dateLabel": "De 09/10/2026 até 20/10/2026",
+    "duration": "12 dias",
+    "price": "R$ 24.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 10 parcelas de R$2.238,00 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-8.jpg",
+    "href": "peregrinacao-8.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Pe. Orozimbo De Paula Junior, sdb",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-9",
+    "title": "Santuários Marianos Especial - Portugal, Espanha e França - Outubro 2026",
+    "destination": "Santuários Marianos Especial - Portugal, Espanha e França",
+    "month": 10,
+    "year": 2026,
+    "dayStart": 1,
+    "dateLabel": "De 01/10/2026 até 16/10/2026",
+    "duration": "16 dias",
+    "price": "R$ 28.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 10 parcelas de R$2.638,00 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-9.jpg",
+    "href": "peregrinacao-9.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre José Dimas e Shirley Batista (Canção Nova)",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-10",
+    "title": "Itália e Portugal - Novembro 2026",
+    "destination": "Itália e Portugal",
+    "month": 11,
+    "year": 2026,
+    "dayStart": 8,
+    "dateLabel": "De 08/11/2026 até 23/11/2026",
+    "duration": "16 dias",
+    "price": "R$ 27.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 11 parcelas de R$2.307,27 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-10.jpg",
+    "href": "peregrinacao-10.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Gilberto (Canção Nova)",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-11",
+    "title": "Grécia e Turquia - Mães que Oram - Setembro 26",
+    "destination": "Grécia e Turquia - Mães que Oram",
+    "month": 9,
+    "year": 2026,
+    "dayStart": 28,
+    "dateLabel": "De 28/09/2026 até 10/10/2026",
+    "duration": "13 dias",
+    "price": "R$ 28.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 11 parcelas de R$2.398,18 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-11.jpg",
+    "href": "peregrinacao-11.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Donizete e Ângela Abdo",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-12",
+    "title": "Inglaterra, Gales, Escócia e Irlanda - Outubro 2026",
+    "destination": "Inglaterra, Gales, Escócia e Irlanda",
+    "month": 10,
+    "year": 2026,
+    "dayStart": 1,
+    "dateLabel": "De 01/10/2026 até 15/10/2026",
+    "duration": "15 dias",
+    "price": "R$ 34.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 10 parcelas de R$3.238,00 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-12.png",
+    "href": "peregrinacao-12.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Wagner Ferreira (Canção Nova)",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-13",
+    "title": "Portugal, República Tcheca, Áustria e Polônia - Novembro 26",
+    "destination": "Portugal, República Tcheca, Áustria e Polônia",
+    "month": 11,
+    "year": 2026,
+    "dayStart": 1,
+    "dateLabel": "De 01/11/2026 até 13/11/2026",
+    "duration": "13 dias",
+    "price": "R$ 27.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 11 parcelas de R$2.307,27 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-13.jpg",
+    "href": "peregrinacao-13.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Bruno Costa e Alexandra Gonçalves (Canção Nova)",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-14",
+    "title": "México - Outubro 2026",
+    "destination": "México",
+    "month": 10,
+    "year": 2026,
+    "dayStart": 19,
+    "dateLabel": "De 19/10/2026 até 27/10/2026",
+    "duration": "9 dias",
+    "price": "R$ 19.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 10 parcelas de R$1.738,00 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-14.jpg",
+    "href": "peregrinacao-14.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Márcio Prado e Patrícia Mendes (Canção Nova)",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-15",
+    "title": "Alemanha, Itália e Medjugorje – Novembro de 2026",
+    "destination": "Alemanha, Itália e Medjugorje – Novembro de 2026",
+    "month": 11,
+    "year": 2026,
+    "dayStart": 16,
+    "dateLabel": "De 16/11/2026 até 27/11/2026",
+    "duration": "12 dias",
+    "price": "R$ 28.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 11 parcelas de R$2.398,18 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-15.jpg",
+    "href": "peregrinacao-15.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Fabrício Andrade e Sônia Venâncio (Canção Nova)",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-16",
+    "title": "Itália Especial - Maio 2027",
+    "destination": "Itália Especial",
+    "month": 5,
+    "year": 2027,
+    "dayStart": 13,
+    "dateLabel": "De 13/05/2027 até 28/05/2027",
+    "duration": "16 dias",
+    "price": "R$ 28.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 17 parcelas de R$1.551,76 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-16.jpg",
+    "href": "peregrinacao-16.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Gabriel Gonçalves",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-17",
+    "title": "Dinamarca, Noruega e Suécia - Abril 2027",
+    "destination": "Dinamarca, Noruega e Suécia",
+    "month": 4,
+    "year": 2027,
+    "dayStart": 1,
+    "dateLabel": "De 01/04/2027 até 14/04/2027",
+    "duration": "14 dias",
+    "price": "R$ 33.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 16 parcelas de R$1.961,25 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-17.jpg",
+    "href": "peregrinacao-17.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": []
+  },
+  {
+    "id": "peregrinacao-18",
+    "title": "Inglaterra, Gales, Escócia e Irlanda - Maio 2027",
+    "destination": "Inglaterra, Gales, Escócia e Irlanda",
+    "month": 5,
+    "year": 2027,
+    "dayStart": 14,
+    "dateLabel": "De 14/05/2027 até 28/05/2027",
+    "duration": "15 dias",
+    "price": "R$ 34.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 17 parcelas de R$1.904,70 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-18.jpg",
+    "href": "peregrinacao-18.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": []
+  },
+  {
+    "id": "peregrinacao-19",
+    "title": "Santuários Marianos - Padre Wagner Galvão",
+    "destination": "Santuários Marianos",
+    "month": 10,
+    "year": 2026,
+    "dayStart": 6,
+    "dateLabel": "De 06/10/2026 até 21/10/2026",
+    "duration": "16 dias",
+    "price": "R$ 28.980,00",
+    "entryPayment": "Entrada de R$2.600,00 + 10 parcelas de R$2.638,00 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-19.jpg",
+    "href": "peregrinacao-19.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": [
+      {
+        "name": "Padre Wagner Galvão",
+        "role": "Diretor Espiritual"
+      }
+    ]
+  },
+  {
+    "id": "peregrinacao-20",
+    "title": "México com Cancún - Junho 2027",
+    "destination": "México com Cancún",
+    "month": 6,
+    "year": 2027,
+    "dayStart": 1,
+    "dateLabel": "De 01/06/2027 até 11/06/2027",
+    "duration": "11 dias",
+    "price": "R$ 24.890,00",
+    "entryPayment": "Entrada de R$2.600,00 + 18 parcelas de R$1.243,34 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-20.jpg",
+    "href": "peregrinacao-20.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
+    "directors": []
+  },
+  {
+    "id": "peregrinacao-21",
+    "title": "Itália e Portugal - Maio 2027",
+    "destination": "Itália e Portugal",
+    "month": 5,
+    "year": 2027,
+    "dayStart": 25,
+    "dateLabel": "De 25/05/2027 até 07/06/2027",
     "duration": "14 dias",
     "price": "R$ 27.980,00",
-    "entryPayment": "R$ 5.000,00",
-    "installments": 10,
-    "description": "Roma, Assis, Cássia, Lanciano, Monte Gargano, San Giovanni Rotondo, Paris e Lisieux. Grandes santuários da Europa.",
-    "img": "assets/images/pilgrimages/italia-franca-julho-2026.jpg",
-    "href": "italia-franca-julho-2026.html",
-    "category": "cancaonova",
-    "status": "confirmado",
-    "cancaoNova": true,
+    "entryPayment": "Entrada de R$2.600,00 + 17 parcelas de R$1.492,94 (boleto + cartão de crédito) SEM JUROS",
+    "installments": 0,
+    "description": "Confira o roteiro completo desta peregrinação.",
+    "img": "assets/images/pilgrimages/peregrinacao-21.jpg",
+    "href": "peregrinacao-21.html",
+    "category": "lojasaojose",
+    "status": "disponivel",
+    "cancaoNova": false,
     "directors": [
       {
-        "name": "Pe. Evandro",
-        "role": "Diretor Espiritual",
-        "photo": null
+        "name": "Padre Willian Guimarães e Salette Ferreira (Canção Nova)",
+        "role": "Diretor Espiritual"
       }
     ]
-  },
-  {
-    "id": "portugal-italia-agosto-2026",
-    "title": "Portugal e Itália – Agosto 2026",
-    "destination": "Portugal · Itália",
-    "month": 8,
-    "year": 2026,
-    "dayStart": 3,
-    "dateLabel": "03 a 17 de Agosto de 2026",
-    "duration": "15 dias",
-    "price": "R$ 26.980,00",
-    "entryPayment": "R$ 5.000,00",
-    "installments": 10,
-    "description": "Fátima, Lisboa, Roma, Vaticano, Assis, Loreto, San Giovanni Rotondo e Veneza. Com Pe. Fábio Galdino, Pe. Duarte Lara e Danilo Gesualdo.",
-    "img": "assets/images/pilgrimages/portugal-italia-agosto-2026.jpg",
-    "href": "portugal-italia-agosto-2026.html",
-    "category": "cancaonova",
-    "status": "confirmado",
-    "cancaoNova": true,
-    "directors": [
-      {
-        "name": "Pe. Fábio Galdino",
-        "role": "Diretor Espiritual",
-        "photo": null
-      },
-      {
-        "name": "Pe. Duarte Lara",
-        "role": "Diretor Espiritual",
-        "photo": null
-      },
-      {
-        "name": "Danilo Gesualdo",
-        "role": "Missionário",
-        "photo": null
-      }
-    ]
-  },
-  {
-    "id": "republica-tcheca-agosto-2026",
-    "title": "República Tcheca, Alemanha, Áustria, Eslováquia e Hungria – Agosto 2026",
-    "destination": "Rep. Tcheca · Alemanha · Áustria · Hungria",
-    "month": 8,
-    "year": 2026,
-    "dayStart": 10,
-    "dateLabel": "Agosto de 2026",
-    "duration": "A confirmar",
-    "price": null,
-    "entryPayment": null,
-    "installments": null,
-    "description": "Praga, Karlovy Vary, Munique, Castelo de Neuschwanstein, Innsbruck, Salzburgo, Melk, Viena, Bratislava e Budapeste.",
-    "img": "assets/images/pilgrimages/republica-tcheca-agosto-2026.jpg",
-    "href": "republica-tcheca-agosto-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
-    "cancaoNova": false,
-    "directors": []
-  },
-  {
-    "id": "grecia-turquia-agosto-2026",
-    "title": "Grécia e Turquia com Capadócia e Ilhas Gregas – Agosto 2026",
-    "destination": "Grécia · Turquia · Capadócia",
-    "month": 8,
-    "year": 2026,
-    "dayStart": 15,
-    "dateLabel": "Agosto de 2026",
-    "duration": "A confirmar",
-    "price": null,
-    "entryPayment": null,
-    "installments": null,
-    "description": "Capadócia, Éfeso, Casa de Nossa Senhora, Patmos, Santorini, Rodes, Creta, Atenas, Meteora e Tessalônica.",
-    "img": "assets/images/pilgrimages/grecia-turquia-capadocia-agosto-2026.jpg",
-    "href": "grecia-turquia-julho-2026.html",
-    "category": "saojose",
-    "status": "confirmado",
-    "cancaoNova": false,
-    "directors": []
   }
 ],
   gallery: [],
-  meta: { lastUpdated: "2026-03-11T22:35:25.712Z" }
+  meta: { lastUpdated: "2026-05-29T21:25:31.819Z" }
 };
 
 // ── STATUS HELPERS ─────────────────────────────────────
@@ -388,6 +566,9 @@ SJ_DATA.buildCard = function(p) {
   }
   var media = '<div class="card-media-wrap">' + mediaInner + overlays + '</div>';
   var statusHTML = SJ_DATA.getStatusHTML(p.status);
+  var priceHTML = p.price
+    ? '<div class="card-price-row"><span class="card-price-label">Investimento</span><span class="card-price-value">' + p.price + '</span></div>'
+    : '';
   var ctaHtml = '';
   if (isCancelado) {
     ctaHtml = '<button class="btn btn-green btn-blocked" style="width:100%;justify-content:center;margin-top:8px;" disabled>Peregrinação Cancelada</button>';
@@ -417,11 +598,12 @@ SJ_DATA.buildCard = function(p) {
        +       statusHTML
        +     '</div>'
        +     '<h3>' + p.title + '</h3>'
-       +     '<p>' + (p.description || '').replace(/\s*Parceria especial com a Canção Nova\.?/gi, '').replace(/\s*com o diferencial espiritual da Canção Nova\.?/gi, '').trim() + '</p>'
+       +     '<p>' + (p.description || '').replace(/s*Parceria especial com a Canção Nova.?/gi, '').replace(/s*com o diferencial espiritual da Canção Nova.?/gi, '').trim() + '</p>'
        +     '<div class="card-meta">'
        +       '<span>' + calSVG + ' ' + p.dateLabel + '</span>'
        +       '<span>' + clkSVG + ' ' + p.duration + '</span>'
        +     '</div>'
+       +     priceHTML
        +     ctaHtml
        +   '</div>'
        + '</div>';
@@ -433,6 +615,8 @@ SJ_DATA.waitlistJS = 'function toggleWaitlist(id){var f=document.getElementById(
   +   'var e=document.getElementById("wle-"+pid);'
   +   'if(!n||!e||!n.value.trim()||!e.value.trim()){alert("Preencha nome e e-mail.");return;}'
   +   'var msg=encodeURIComponent("Olá! Gostaria de entrar na lista de espera para: "+title+". Nome: "+n.value.trim()+". E-mail: "+e.value.trim()+".");'
+  +   'var phone=window.SJ_WHATSAPP_NUMBER||"5567932117001";'
+  +   'window.open("https://wa.me/"+phone+"?text="+msg,"_blank","noopener");'
   +   'var formEl=n.closest(".waitlist-form");'
   +   'if(formEl){formEl.innerHTML="<div class=\'waitlist-success\'>&#10003; Interesse registrado! Entraremos em contato em breve.</div>";}'
   + '}';
