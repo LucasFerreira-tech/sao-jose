@@ -160,10 +160,10 @@
     <img src="assets/images/logo.jpg" alt="Logo São José">
     <h1>Área Administrativa</h1>
     <p>São José Peregrinações</p>
-    <div class="lf"><label>Usuário</label><input type="text" id="l-user" placeholder="admin" autocomplete="username"></div>
+    <div class="lf"><label>E-mail</label><input type="email" id="l-user" placeholder="rferreiralucass@gmail.com" autocomplete="username"></div>
     <div class="lf"><label>Senha</label><input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"></div>
     <button class="btn-login" onclick="doLogin()">Entrar</button>
-    <div class="login-err" id="l-err">Usuário ou senha incorretos.</div>
+    <div class="login-err" id="l-err">E-mail ou senha incorretos.</div>
   </div>
 </div>
 
@@ -331,7 +331,7 @@
             <option value="true">Sim – exibir na página Canção Nova</option>
           </select>
         </div>
-        <div class="fg span2"><label>Link da página de detalhes</label><input id="f-href" placeholder="Ex: terra-santa-julho-2026.html"></div>
+        <div class="fg span2"><label>Link da página de detalhes</label><input id="f-href" placeholder="Ex: peregrinacao-1.html"></div>
         <div class="fg span2"><label>Descrição *</label><textarea id="f-desc" rows="3" placeholder="Descreva o roteiro, destinos e diferenciais da peregrinação..."></textarea></div>
 
         <!-- Image upload -->
@@ -386,7 +386,7 @@
    Admin CMS that manages js/data.js and exports ZIP
 =================================================== */
 
-const CREDS = { user: 'admin', pass: 'saojose2026' };
+const CREDS = { email: 'rferreiralucass@gmail.com', pass: 'saojose2026' };
 
 // Working data — cloned from data.js on load
 let DATA = [];
@@ -399,9 +399,9 @@ let _directorList = [];
 
 /* ── AUTH ─────────────────────────────────────── */
 function doLogin() {
-  const u = document.getElementById('l-user').value.trim();
+  const u = document.getElementById('l-user').value.trim().toLowerCase();
   const p = document.getElementById('l-pass').value;
-  if (u === CREDS.user && p === CREDS.pass) {
+  if (u === CREDS.email && p === CREDS.pass) {
     document.getElementById('l-err').style.display = 'none';
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-app').style.display = 'block';
@@ -815,16 +815,27 @@ async function exportZip() {
 
     // 2 — Fetch all HTML + CSS + JS files
     const textFiles = [
-      'index.html','peregrinacoes.html','cancao-nova.html','calendario.html',
-      'admin.html','sobre.html','contato.html','galeria.html',
-      'aparecida-marco-2026.html','italia-abril-2026.html',
-      'belgica-maio-2026.html','portugal-espanha-franca-maio-2026.html',
-      'mexico-maio-2026.html','franca-junho-2026.html','italia-junho-2026.html',
-      'terra-santa-julho-2026.html','italia-franca-julho-2026.html',
-      'portugal-italia-agosto-2026.html','republica-tcheca-agosto-2026.html',
-      'grecia-turquia-julho-2026.html','peregrinacao-detalhe.html',
-      '_components.html','css/style.css','js/main.js',
-      'LICENSE','README.md',
+      'peregrinacao-1.html',
+      'peregrinacao-2.html',
+      'peregrinacao-3.html',
+      'peregrinacao-4.html',
+      'peregrinacao-5.html',
+      'peregrinacao-6.html',
+      'peregrinacao-7.html',
+      'peregrinacao-8.html',
+      'peregrinacao-9.html',
+      'peregrinacao-10.html',
+      'peregrinacao-11.html',
+      'peregrinacao-12.html',
+      'peregrinacao-13.html',
+      'peregrinacao-14.html',
+      'peregrinacao-15.html',
+      'peregrinacao-16.html',
+      'peregrinacao-17.html',
+      'peregrinacao-18.html',
+      'peregrinacao-19.html',
+      'peregrinacao-20.html',
+      'peregrinacao-21.html'
     ];
     for (const f of textFiles) {
       try {
@@ -835,26 +846,27 @@ async function exportZip() {
 
     // 3 — Fetch existing binary images
     const imgPaths = [
-      'assets/images/logo.jpg','assets/images/sao-jose-navbar.png',
-      'assets/images/dev-lucas-logo.png','assets/images/monsenhor-jonas-abib.png',
-      'assets/images/padre-renne-viana.png','assets/images/pitter-di-laura.jpg',
-      'assets/images/padre-linniker.png','assets/images/padre-jesu.png',
-      'assets/images/sonia-venancio.png','assets/images/padre-alessandro.jpg',
-      'assets/images/salette-ferreira.jpg','assets/images/padre-marcio-reis.jpg',
-      'assets/images/padre-edilberto.png','assets/images/emanuel-stenio.png',
-      'assets/images/pilgrimages/aparecida-marco-2026.jpg',
-      'assets/images/pilgrimages/italia-abril-2026.jpg',
-      'assets/images/pilgrimages/belgica-maio-2026.jpg',
-      'assets/images/pilgrimages/portugal-espanha-franca-maio-2026.jpg',
-      'assets/images/pilgrimages/mexico-maio-2026.jpg',
-      'assets/images/pilgrimages/franca-junho-2026.jpg',
-      'assets/images/pilgrimages/italia-junho-2026.jpg',
-      'assets/images/pilgrimages/terra-santa-julho-2026.jpg',
-      'assets/images/pilgrimages/italia-franca-julho-2026.jpg',
-      'assets/images/pilgrimages/portugal-italia-agosto-2026.jpg',
-      'assets/images/pilgrimages/republica-tcheca-agosto-2026.jpg',
-      'assets/images/pilgrimages/grecia-turquia-capadocia-agosto-2026.jpg',
-      'assets/images/pilgrimages/grecia-turquia-julho-2026.jpg',
+      'assets/images/pilgrimages/peregrinacao-1.jpg',
+      'assets/images/pilgrimages/peregrinacao-2.jpg',
+      'assets/images/pilgrimages/peregrinacao-3.jpg',
+      'assets/images/pilgrimages/peregrinacao-4.jpg',
+      'assets/images/pilgrimages/peregrinacao-5.jpg',
+      'assets/images/pilgrimages/peregrinacao-6.jpg',
+      'assets/images/pilgrimages/peregrinacao-7.jpg',
+      'assets/images/pilgrimages/peregrinacao-8.jpg',
+      'assets/images/pilgrimages/peregrinacao-9.jpg',
+      'assets/images/pilgrimages/peregrinacao-10.jpg',
+      'assets/images/pilgrimages/peregrinacao-11.jpg',
+      'assets/images/pilgrimages/peregrinacao-12.png',
+      'assets/images/pilgrimages/peregrinacao-13.jpg',
+      'assets/images/pilgrimages/peregrinacao-14.jpg',
+      'assets/images/pilgrimages/peregrinacao-15.jpg',
+      'assets/images/pilgrimages/peregrinacao-16.jpg',
+      'assets/images/pilgrimages/peregrinacao-17.jpg',
+      'assets/images/pilgrimages/peregrinacao-18.jpg',
+      'assets/images/pilgrimages/peregrinacao-19.jpg',
+      'assets/images/pilgrimages/peregrinacao-20.jpg',
+      'assets/images/pilgrimages/peregrinacao-21.jpg'
     ];
     for (const f of imgPaths) {
       try {
@@ -976,6 +988,9 @@ SJ_DATA.buildCard = function(p) {
   }
   var media = '<div class="card-media-wrap">' + mediaInner + overlays + '</div>';
   var statusHTML = SJ_DATA.getStatusHTML(p.status);
+  var priceHTML = p.price
+    ? '<div class="card-price-row"><span class="card-price-label">Investimento</span><span class="card-price-value">' + p.price + '</span></div>'
+    : '';
   var ctaHtml = '';
   if (isCancelado) {
     ctaHtml = '<button class="btn btn-green btn-blocked" style="width:100%;justify-content:center;margin-top:8px;" disabled>Peregrinação Cancelada</button>';
@@ -1010,6 +1025,7 @@ SJ_DATA.buildCard = function(p) {
        +       '<span>' + calSVG + ' ' + p.dateLabel + '</span>'
        +       '<span>' + clkSVG + ' ' + p.duration + '</span>'
        +     '</div>'
+       +     priceHTML
        +     ctaHtml
        +   '</div>'
        + '</div>';
@@ -1021,6 +1037,8 @@ SJ_DATA.waitlistJS = 'function toggleWaitlist(id){var f=document.getElementById(
   +   'var e=document.getElementById("wle-"+pid);'
   +   'if(!n||!e||!n.value.trim()||!e.value.trim()){alert("Preencha nome e e-mail.");return;}'
   +   'var msg=encodeURIComponent("Olá! Gostaria de entrar na lista de espera para: "+title+". Nome: "+n.value.trim()+". E-mail: "+e.value.trim()+".");'
+  +   'var phone=window.SJ_WHATSAPP_NUMBER||"556732117001";'
+  +   'window.open("https://wa.me/"+phone+"?text="+msg,"_blank","noopener");'
   +   'var formEl=n.closest(".waitlist-form");'
   +   'if(formEl){formEl.innerHTML="<div class=\\'waitlist-success\\'>&#10003; Interesse registrado! Entraremos em contato em breve.</div>";}'
   + '}';
