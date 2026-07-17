@@ -59,10 +59,14 @@ if (navToggle && navMobile) {
 
 // ── Active nav link ─────────────────────────────────────
 (function setActiveNav() {
-  const current = window.location.pathname.split('/').pop() || 'index.html';
+  const current = (window.location.pathname.replace(/\/+$/, '').split('/').pop() || 'index')
+    .replace(/\.html$/i, '');
   document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(a => {
     const href = a.getAttribute('href');
-    if (href === current || (current === '' && href === 'index.html')) {
+    if (!href || href.startsWith('#') || /^(https?:|mailto:|tel:)/i.test(href)) return;
+    const target = (href === '/' ? 'index' : href.split(/[?#]/)[0].replace(/\/+$/, '').split('/').pop())
+      .replace(/\.html$/i, '');
+    if (target === current) {
       a.classList.add('active');
     }
   });
