@@ -1430,6 +1430,10 @@ footer {
   object-fit: contain;
   display: block;
 }
+.card-media-wrap > img.card-img-cover {
+  object-fit: cover !important;
+  object-position: center;
+}
 
 /* CANCELADA — glass overlay + red stamp */
 .card-cancelada-overlay {

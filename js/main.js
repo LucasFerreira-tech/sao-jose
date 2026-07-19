@@ -17,6 +17,55 @@ function getWhatsAppURL(customMsg) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
 }
 
+// ── Google Analytics: contact clicks ───────────────────
+// Records the intention to contact. It does not confirm that the message
+// was actually sent after WhatsApp/Gmail was opened.
+function trackContactClick(eventName, element) {
+  if (typeof window.gtag !== 'function') return;
+
+  const buttonText = (
+    element.getAttribute('aria-label') ||
+    element.textContent ||
+    eventName
+  ).replace(/\s+/g, ' ').trim().slice(0, 100);
+
+  const pilgrimageTitle = document.querySelector('.page-hero h1, main h1, h1')
+    ?.textContent.replace(/\s+/g, ' ').trim().slice(0, 100) || '';
+
+  let contactLocation = 'conteudo';
+  if (element.closest('nav')) contactLocation = 'menu';
+  else if (element.closest('footer')) contactLocation = 'rodape';
+  else if (element.matches('.whatsapp-float')) contactLocation = 'botao_flutuante';
+  else if (element.closest('#contactForm')) contactLocation = 'formulario';
+
+  window.gtag('event', eventName, {
+    contact_channel: eventName === 'click_whatsapp' ? 'whatsapp' : 'email',
+    button_text: buttonText,
+    contact_location: contactLocation,
+    pilgrimage_name: pilgrimageTitle,
+    page_path: window.location.pathname,
+    page_title: document.title
+  });
+}
+
+document.addEventListener('click', (event) => {
+  const element = event.target.closest('a, button');
+  if (!element) return;
+
+  const href = element.getAttribute('href') || '';
+  const onclick = element.getAttribute('onclick') || '';
+  const isWhatsApp =
+    element.hasAttribute('data-whatsapp') ||
+    element.classList.contains('btn-whatsapp') ||
+    /handleContactSubmit\s*\(\s*['"]whatsapp['"]\s*\)/i.test(onclick);
+  const isEmail =
+    /^mailto:/i.test(href) ||
+    /handleContactSubmit\s*\(\s*['"]email['"]\s*\)/i.test(onclick);
+
+  if (isWhatsApp) trackContactClick('click_whatsapp', element);
+  else if (isEmail) trackContactClick('click_email', element);
+});
+
 // Wire all WhatsApp buttons
 document.addEventListener('DOMContentLoaded', () => {
   const whatsappIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.55 6.55 0 0 1-3.342-.916l-.24-.144-2.494.654.666-2.432-.156-.25a6.55 6.55 0 1 1 5.566 3.088zm3.594-4.922c-.197-.098-1.165-.575-1.345-.64-.18-.066-.312-.099-.443.098-.131.197-.509.64-.624.772-.115.131-.23.148-.427.049-.197-.098-.832-.306-1.584-.977-.586-.522-.982-1.166-1.097-1.363-.115-.197-.012-.303.086-.401.089-.088.197-.23.296-.345.098-.115.131-.197.197-.328.065-.131.033-.246-.016-.345-.05-.098-.443-1.067-.607-1.46-.16-.383-.323-.331-.443-.337a8 8 0 0 0-.378-.007.724.724 0 0 0-.525.246c-.18.197-.689.673-.689 1.64 0 .968.705 1.903.804 2.034.098.131 1.388 2.12 3.363 2.973.47.203.837.324 1.123.414.472.15.902.129 1.242.078.379-.057 1.165-.476 1.329-.936.164-.46.164-.853.115-.936-.049-.082-.18-.131-.377-.23z"/></svg>';
@@ -59,10 +108,14 @@ if (navToggle && navMobile) {
 
 // ── Active nav link ─────────────────────────────────────
 (function setActiveNav() {
-  const current = window.location.pathname.split('/').pop() || 'index.html';
+  const current = (window.location.pathname.replace(/\/+$/, '').split('/').pop() || 'index')
+    .replace(/\.html$/i, '');
   document.querySelectorAll('.nav-links a, .nav-mobile a').forEach(a => {
     const href = a.getAttribute('href');
-    if (href === current || (current === '' && href === 'index.html')) {
+    if (!href || href.startsWith('#') || /^(https?:|mailto:|tel:)/i.test(href)) return;
+    const target = (href === '/' ? 'index' : href.split(/[?#]/)[0].replace(/\/+$/, '').split('/').pop())
+      .replace(/\.html$/i, '');
+    if (target === current) {
       a.classList.add('active');
     }
   });
